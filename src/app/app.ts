@@ -15,4 +15,14 @@ export class App {
   constructor() {
     this.maintenanceService.loadSingleMaintenance('bda2c6e6-79b8-43d8-8a82-22b3ec88d947');
   }
+
+  ngOnInit() {
+    // this.maintenanceService.addMaintenance(
+    //   'Wymienić filtr wody',
+    //   'bf3529fe-a521-4543-bf99-dc2eed50602f',
+    //   '2025-08-24',
+    //   '1 month',
+    //   7,
+    // );
+  }
 }

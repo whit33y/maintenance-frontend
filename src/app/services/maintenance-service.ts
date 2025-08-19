@@ -42,6 +42,33 @@ export class MaintenanceService {
       },
     });
   }
+
+  addMaintenance(
+    title: string,
+    category: string,
+    startDate: string,
+    repeatInterval: string,
+    reminderDaysBefore: number,
+  ) {
+    this.http
+      .post<any>('http://localhost:8000/api/maintenance', {
+        title,
+        category,
+        startDate,
+        repeatInterval,
+        reminderDaysBefore,
+      })
+      .subscribe({
+        next: data => {
+          console.log('Maintenance added:', data);
+          this.maintenance.update(current => [...current, data]);
+        },
+        error: err => {
+          console.error('Failed to add maintenance', err);
+          this.error.set(err.message);
+        },
+      });
+  }
 }
 
 type Maintenance = {
@@ -50,6 +77,6 @@ type Maintenance = {
   category_id: string;
   start_date: string;
   repeat_interval: string;
-  reminder_days_before: string;
+  reminder_days_before: number;
   completed: boolean;
 };
