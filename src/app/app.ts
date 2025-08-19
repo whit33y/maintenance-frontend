@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MaintenanceService } from './services/maintenance';
+import { MaintenanceService } from './services/maintenance-service';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +13,6 @@ export class App {
   maintenanceService = inject(MaintenanceService);
 
   constructor() {
-    effect(() => {
-      console.log(this.maintenanceService.maintenance());
-    });
+    this.maintenanceService.loadSingleMaintenance('bda2c6e6-79b8-43d8-8a82-22b3ec88d947');
   }
 }
