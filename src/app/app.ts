@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MaintenanceService } from './services/maintenance-service';
 import { CategoriesService } from './services/categories-service';
+import { Sidebar } from './components/layout/sidebar/sidebar';
+import { Footer } from './components/layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Sidebar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
