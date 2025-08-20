@@ -16,7 +16,7 @@ export class App {
 
   constructor() {
     this.maintenanceService.loadSingleMaintenance('bda2c6e6-79b8-43d8-8a82-22b3ec88d947');
-    this.categoriesService.loadCategory('eded2b99-add1-4f1d-bb49-7c1368568fc3');
+    this.categoriesService.loadCategory('bf3529fe-a521-4543-bf99-dc2eed50602f');
   }
 
   ngOnInit() {
