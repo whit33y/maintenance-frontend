@@ -45,6 +45,61 @@ export class CategoriesService {
       },
     });
   }
+
+  addCategory(name: string, is_private: boolean, user_id: string) {
+    this.http
+      .post<Category>(`${this.PATH}`, {
+        name,
+        is_private,
+        user_id,
+      })
+      .subscribe({
+        next: data => {
+          console.log('Category added:', data);
+          this.categories.update(current => [...current, data]);
+        },
+        error: err => {
+          console.error('Failed to add category', err);
+          this.error.set(err.message);
+        },
+      });
+  }
+
+  updateCategory(id: string, name: string, is_private: boolean, user_id: string) {
+    console.log(id, name, is_private, user_id);
+    this.http
+      .put<Category>(`${this.PATH}/${id}`, {
+        name,
+        is_private,
+        user_id,
+      })
+      .subscribe({
+        next: data => {
+          console.log('Category updated:', data);
+          let categoryArray = this.categories();
+          let updatedArray = categoryArray.map(item =>
+            item.id === id ? { ...item, ...data } : item,
+          );
+          this.categories.set(updatedArray);
+        },
+        error: err => {
+          console.error('Failed to update category', err);
+          this.error.set(err.message);
+        },
+      });
+  }
+
+  deleteCategory(id: string) {
+    this.http.delete<{ message: string; category: Category }>(`${this.PATH}/${id}`).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: err => {
+        console.error('Failed while deleting category', err);
+        this.error.set(err.message);
+      },
+    });
+  }
 }
 
 type Category = {

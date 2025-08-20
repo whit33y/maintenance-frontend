@@ -16,10 +16,15 @@ export class App {
 
   constructor() {
     this.maintenanceService.loadSingleMaintenance('bda2c6e6-79b8-43d8-8a82-22b3ec88d947');
-    this.categoriesService.loadCategory('22a739fb-92c0-484f-87d1-b5a5e255188e');
+    this.categoriesService.loadCategory('eded2b99-add1-4f1d-bb49-7c1368568fc3');
   }
 
   ngOnInit() {
-    // this.maintenanceService.deleteMaintenance('b89be399-bb08-476e-81b4-3619364865ad');
+    // this.categoriesService.updateCategory(
+    //   'eded2b99-add1-4f1d-bb49-7c1368568fc3',
+    //   'Rachunki',
+    //   false,
+    //   '13bd193e-7ce9-11f0-8098-cdbd4d4884be',
+    // );
   }
 }
