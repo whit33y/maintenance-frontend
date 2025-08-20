@@ -17,14 +17,6 @@ export class App {
   }
 
   ngOnInit() {
-    // this.maintenanceService.updateMaintenance(
-    //   'b89be399-bb08-476e-81b4-3619364865ad',
-    //   'Wymienić filtr wody',
-    //   'bf3529fe-a521-4543-bf99-dc2eed50602f',
-    //   '2025-08-24',
-    //   '1 month',
-    //   7,
-    //   true,
-    // );
+    // this.maintenanceService.deleteMaintenance('b89be399-bb08-476e-81b4-3619364865ad');
   }
 }

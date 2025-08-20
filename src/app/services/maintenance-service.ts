@@ -106,6 +106,18 @@ export class MaintenanceService {
         },
       });
   }
+
+  deleteMaintenance(id: string) {
+    this.http.delete<any>(`${this.PATH}/${id}`).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: err => {
+        console.error('Failed while deleting maintenance', err);
+        this.error.set(err.message);
+      },
+    });
+  }
 }
 
 type Maintenance = {
