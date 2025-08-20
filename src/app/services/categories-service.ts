@@ -93,6 +93,7 @@ export class CategoriesService {
     this.http.delete<{ message: string; category: Category }>(`${this.PATH}/${id}`).subscribe({
       next: data => {
         console.log(data);
+        this.categories.update(current => current.filter(item => item.id !== id));
       },
       error: err => {
         console.error('Failed while deleting category', err);

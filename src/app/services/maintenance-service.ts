@@ -113,6 +113,7 @@ export class MaintenanceService {
       .subscribe({
         next: data => {
           console.log(data);
+          this.maintenance.update(current => current.filter(item => item.id !== id));
         },
         error: err => {
           console.error('Failed while deleting maintenance', err);
