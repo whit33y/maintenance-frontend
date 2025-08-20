@@ -54,7 +54,7 @@ export class MaintenanceService {
     reminderDaysBefore: number,
   ) {
     this.http
-      .post<any>(this.PATH, {
+      .post<Maintenance>(this.PATH, {
         title,
         categoryId,
         startDate,
@@ -76,16 +76,16 @@ export class MaintenanceService {
   updateMaintenance(
     id: string,
     title: string,
-    category: string,
+    categoryId: string,
     startDate: string,
     repeatInterval: string,
     reminderDaysBefore: number,
     completed: boolean,
   ) {
     this.http
-      .put<any>(`${this.PATH}/${id}`, {
+      .put<Maintenance>(`${this.PATH}/${id}`, {
         title,
-        category,
+        categoryId,
         startDate,
         repeatInterval,
         reminderDaysBefore,
@@ -108,15 +108,17 @@ export class MaintenanceService {
   }
 
   deleteMaintenance(id: string) {
-    this.http.delete<any>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        console.log(data);
-      },
-      error: err => {
-        console.error('Failed while deleting maintenance', err);
-        this.error.set(err.message);
-      },
-    });
+    this.http
+      .delete<{ message: string; maintenance: Maintenance }>(`${this.PATH}/${id}`)
+      .subscribe({
+        next: data => {
+          console.log(data);
+        },
+        error: err => {
+          console.error('Failed while deleting maintenance', err);
+          this.error.set(err.message);
+        },
+      });
   }
 }
 
