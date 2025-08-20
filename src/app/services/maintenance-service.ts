@@ -9,12 +9,15 @@ export class MaintenanceService {
   maintenance = signal<Maintenance[]>([]);
   selectedMaintenance = signal<Maintenance | null>(null);
   error = signal<string>('');
+
+  private PATH = 'http://localhost:8000/api/maintenance';
+
   constructor() {
     this.loadMaintenance();
   }
 
   loadMaintenance() {
-    this.http.get<Maintenance[]>('http://localhost:8000/api/maintenance').subscribe({
+    this.http.get<Maintenance[]>(this.PATH).subscribe({
       next: data => {
         this.maintenance.set(data);
       },
@@ -29,7 +32,7 @@ export class MaintenanceService {
   }
 
   loadSingleMaintenance(id: string) {
-    this.http.get<Maintenance>(`http://localhost:8000/api/maintenance/${id}`).subscribe({
+    this.http.get<Maintenance>(`${this.PATH}/${id}`).subscribe({
       next: data => {
         this.selectedMaintenance.set(data);
       },
@@ -45,15 +48,15 @@ export class MaintenanceService {
 
   addMaintenance(
     title: string,
-    category: string,
+    categoryId: string,
     startDate: string,
     repeatInterval: string,
     reminderDaysBefore: number,
   ) {
     this.http
-      .post<any>('http://localhost:8000/api/maintenance', {
+      .post<any>(this.PATH, {
         title,
-        category,
+        categoryId,
         startDate,
         repeatInterval,
         reminderDaysBefore,
@@ -65,6 +68,40 @@ export class MaintenanceService {
         },
         error: err => {
           console.error('Failed to add maintenance', err);
+          this.error.set(err.message);
+        },
+      });
+  }
+
+  updateMaintenance(
+    id: string,
+    title: string,
+    category: string,
+    startDate: string,
+    repeatInterval: string,
+    reminderDaysBefore: number,
+    completed: boolean,
+  ) {
+    this.http
+      .put<any>(`${this.PATH}/${id}`, {
+        title,
+        category,
+        startDate,
+        repeatInterval,
+        reminderDaysBefore,
+        completed,
+      })
+      .subscribe({
+        next: data => {
+          console.log('Maintenance updated:', data);
+          let maintenanceArray = this.maintenance();
+          let updatedArray = maintenanceArray.map(item =>
+            item.id === id ? { ...item, ...data } : item,
+          );
+          this.maintenance.set(updatedArray);
+        },
+        error: err => {
+          console.error('Failed to update maintenance', err);
           this.error.set(err.message);
         },
       });
