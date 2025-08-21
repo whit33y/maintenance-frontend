@@ -1,9 +1,15 @@
 <div class="flex h-screen">
     <app-sidebar></app-sidebar>
     <div class="flex flex-col flex-1">
+        <!-- <div class="grid grid-cols-3 gap-2 md:gap-4 lg:grid-cols-3 lg:gap-8 mb-2 mx-1 md:mx-4 mt-4">
+            <app-menu-card title="All" [quantity]="27"></app-menu-card>
+            <app-menu-card title="Upcoming" [quantity]="24"></app-menu-card>
+            <app-menu-card title="Done" [quantity]="3"></app-menu-card>
+        </div> -->
         <div class="flex-1 overflow-auto">
             <router-outlet></router-outlet>
         </div>
+
         <app-footer></app-footer>
     </div>
 </div>

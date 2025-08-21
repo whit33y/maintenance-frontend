@@ -4,10 +4,11 @@ import { MaintenanceService } from './services/maintenance-service';
 import { CategoriesService } from './services/categories-service';
 import { Sidebar } from './components/layout/sidebar/sidebar';
 import { Footer } from './components/layout/footer/footer';
+import { MenuCard } from './components/elements/menu-card/menu-card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Sidebar, Footer],
+  imports: [RouterOutlet, Sidebar, Footer, MenuCard],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
