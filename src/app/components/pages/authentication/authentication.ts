@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { AuthForm } from "../../auth-form/auth-form";
 
 @Component({
   selector: 'app-authentication',
-  imports: [],
+  imports: [AuthForm],
   templateUrl: './authentication.html',
   styleUrl: './authentication.css'
 })
