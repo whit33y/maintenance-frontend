@@ -131,4 +131,5 @@ type Maintenance = {
   repeat_interval: string;
   reminder_days_before: number;
   completed: boolean;
+  user_id: string;
 };
