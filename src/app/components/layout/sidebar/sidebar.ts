@@ -11,8 +11,4 @@ import { Router, RouterModule } from '@angular/router';
 export class Sidebar {
   authService = inject(AuthService);
   private router = inject(Router);
-
-  navigateTo(route: string) {
-    this.router.navigate([`/${route}`]);
-  }
 }
