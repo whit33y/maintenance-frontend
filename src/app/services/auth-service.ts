@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
+  private router = inject(Router);
   private PATH = 'http://localhost:8000/api/auth';
 
   login(email: string, password: string) {
@@ -29,6 +31,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.router.navigate(['/authentication']);
   }
 
   getToken(): string | null {

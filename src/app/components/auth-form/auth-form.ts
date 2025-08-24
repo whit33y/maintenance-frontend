@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-form',
@@ -11,6 +12,7 @@ import { AuthService } from '../../services/auth-service';
 export class AuthForm {
   isLoginForm = true;
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   authForm = new FormGroup({
     username: new FormControl(''),
@@ -39,19 +41,20 @@ export class AuthForm {
     if (this.isLoginForm) {
       this.authService.login(email!, password!).subscribe({
         next: () => {
-          console.log('✅ Zalogowano!');
+          console.log('User logged in');
+          this.router.navigate(['/maintenance']);
         },
         error: err => {
-          console.error('❌ Błąd logowania', err);
+          console.error('Failed to log in!', err);
         },
       });
     } else {
       this.authService.register(username!, email!, password!).subscribe({
         next: () => {
-          console.log('✅ Konto utworzone!');
+          console.log('Account created!');
         },
         error: err => {
-          console.error('❌ Błąd rejestracji', err);
+          console.error('Failed to register!', err);
         },
       });
     }
