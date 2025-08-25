@@ -10,10 +10,11 @@ import { Router } from '@angular/router';
   styleUrl: './auth-form.css',
 })
 export class AuthForm {
-  isLoginForm = true;
-  errorMessage = ' ';
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  isLoginForm = true;
+  errorMessage = ' ';
 
   authForm = new FormGroup({
     username: new FormControl(''),
@@ -24,7 +25,11 @@ export class AuthForm {
   toggleFormMode() {
     this.isLoginForm = !this.isLoginForm;
     this.errorMessage = '';
-    this.authForm.setValue({ username: '', email: '', password: '' });
+    this.authForm.reset({
+      username: '',
+      email: '',
+      password: '',
+    });
 
     if (this.isLoginForm) {
       this.authForm.get('username')?.disable();
