@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AuthForm {
   isLoginForm = true;
+  errorMessage = ' ';
   private authService = inject(AuthService);
   private router = inject(Router);
 
@@ -22,6 +23,8 @@ export class AuthForm {
 
   toggleFormMode() {
     this.isLoginForm = !this.isLoginForm;
+    this.errorMessage = '';
+    this.authForm.setValue({ username: '', email: '', password: '' });
 
     if (this.isLoginForm) {
       this.authForm.get('username')?.disable();
@@ -45,6 +48,7 @@ export class AuthForm {
           this.router.navigate(['/maintenance']);
         },
         error: err => {
+          this.errorMessage = err.error.message;
           console.error('Failed to log in!', err);
         },
       });
@@ -52,8 +56,10 @@ export class AuthForm {
       this.authService.register(username!, email!, password!).subscribe({
         next: () => {
           console.log('Account created!');
+          this.toggleFormMode();
         },
         error: err => {
+          this.errorMessage = err.error.message;
           console.error('Failed to register!', err);
         },
       });
