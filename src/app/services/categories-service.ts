@@ -70,11 +70,11 @@ export class CategoriesService {
         name,
       })
       .subscribe({
-        next: data => {
-          console.log('Category updated:', data);
+        next: response => {
+          console.log('Category updated:', response);
           const categoryArray = this.categories();
           const updatedArray = categoryArray.map(item =>
-            item.id === id ? { ...item, ...data } : item,
+            item.id === id ? { ...item, ...response } : item,
           );
           this.categories.set(updatedArray);
         },
