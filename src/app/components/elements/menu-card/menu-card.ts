@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './menu-card.css',
 })
 export class MenuCard {
-  @Input() title: string = 'All';
-  @Input() quantity: number = 0;
+  @Input() title = 'All';
+  @Input() quantity = 0;
 }

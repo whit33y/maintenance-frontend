@@ -13,7 +13,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http
-      .post<{ token: string; user: any }>(`${this.PATH}/login`, { email, password })
+      .post<{ token: string; user: User }>(`${this.PATH}/login`, { email, password })
       .pipe(
         tap(res => {
           if (res.token) {
@@ -38,7 +38,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getUser(): any {
+  getUser(): User | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
@@ -46,4 +46,10 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
 }

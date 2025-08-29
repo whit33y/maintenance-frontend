@@ -94,8 +94,8 @@ export class MaintenanceService {
       .subscribe({
         next: data => {
           console.log('Maintenance updated:', data);
-          let maintenanceArray = this.maintenance();
-          let updatedArray = maintenanceArray.map(item =>
+          const maintenanceArray = this.maintenance();
+          const updatedArray = maintenanceArray.map(item =>
             item.id === id ? { ...item, ...data } : item,
           );
           this.maintenance.set(updatedArray);
@@ -123,7 +123,7 @@ export class MaintenanceService {
   }
 }
 
-type Maintenance = {
+interface Maintenance {
   id: string;
   title: string;
   category_id: string;
@@ -132,4 +132,4 @@ type Maintenance = {
   reminder_days_before: number;
   completed: boolean;
   user_id: string;
-};
+}

@@ -76,8 +76,8 @@ export class CategoriesService {
       .subscribe({
         next: data => {
           console.log('Category updated:', data);
-          let categoryArray = this.categories();
-          let updatedArray = categoryArray.map(item =>
+          const categoryArray = this.categories();
+          const updatedArray = categoryArray.map(item =>
             item.id === id ? { ...item, ...data } : item,
           );
           this.categories.set(updatedArray);
@@ -103,9 +103,9 @@ export class CategoriesService {
   }
 }
 
-type Category = {
+interface Category {
   id: string;
   name: string;
   is_private: boolean;
   user_id: string;
-};
+}
