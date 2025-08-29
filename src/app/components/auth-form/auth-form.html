@@ -82,9 +82,10 @@
 
     <p class="mt-10 text-center text-sm/6 text-gray-500">
       @if(isLoginForm){You dont have an account?}@else {You already have an account?}
-      <a class="font-semibold text-blue-700 hover:text-blue-500 hover:cursor-pointer"
-        (click)="toggleFormMode()">@if(isLoginForm){ Register
-        }@else{ Log in }</a>
+      <button type="button" class="font-semibold text-blue-700 hover:text-blue-500 hover:cursor-pointer"
+        (click)="toggleFormMode()">
+        @if(isLoginForm){ Register }@else{ Log in }
+      </button>
     </p>
   </div>
   <div>
