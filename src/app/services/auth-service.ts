@@ -48,3 +48,9 @@ export class AuthService {
     return !!this.getToken();
   }
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
