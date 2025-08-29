@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { User } from './interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http
-      .post<{ token: string; user: any }>(`${this.PATH}/login`, { email, password })
+      .post<{ token: string; user: User }>(`${this.PATH}/login`, { email, password })
       .pipe(
         tap(res => {
           if (res.token) {
@@ -38,7 +39,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getUser(): any {
+  getUser(): User | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
