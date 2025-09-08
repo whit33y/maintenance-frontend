@@ -1,0 +1,10 @@
+<div class="w-3xs sm:w-2xs bg-gray-50 my-2">
+    <label for="select" class="sr-only">Select</label>
+    <select id="select" (change)="selectOption($event)"
+        class="block py-2.5 px-1 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-600 appearance-none focus:outline-none focus:ring-0 peer">
+        <option selected>{{description}}</option>
+        @for(option of options; track $index){
+        <option [value]="option.value">{{option.name}}</option>
+        }
+    </select>
+</div>

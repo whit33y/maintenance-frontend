@@ -1,17 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Category } from './interfaces/categories.interface';
+import { MaintenanceService } from './maintenance-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
   http = inject(HttpClient);
+  maintenanceService = inject(MaintenanceService);
   error = signal<string>('');
   categories = signal<Category[]>([]);
   selectedCategory = signal<Category | undefined>(undefined);
 
   private PATH = 'http://localhost:8000/api/categories';
+
+  getCategoriesSignal() {
+    return this.categories.asReadonly();
+  }
 
   constructor() {
     this.loadCategories();
@@ -26,9 +32,6 @@ export class CategoriesService {
         console.error('Failed to load categories', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Categories loaded', this.categories());
-      },
     });
   }
 
@@ -41,9 +44,6 @@ export class CategoriesService {
         console.error('Failed to load category', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Single category loaded', this.selectedCategory());
-      },
     });
   }
 
@@ -54,7 +54,6 @@ export class CategoriesService {
       })
       .subscribe({
         next: response => {
-          console.log('Category added:', response);
           this.categories.update(current => [...current, response]);
         },
         error: err => {
@@ -71,7 +70,6 @@ export class CategoriesService {
       })
       .subscribe({
         next: response => {
-          console.log('Category updated:', response);
           const categoryArray = this.categories();
           const updatedArray = categoryArray.map(item =>
             item.id === id ? { ...item, ...response } : item,
@@ -87,13 +85,15 @@ export class CategoriesService {
 
   deleteCategory(id: string) {
     this.http.delete<{ message: string; data: Category }>(`${this.PATH}/${id}`).subscribe({
-      next: response => {
-        console.log('Category deleted', response.data);
+      next: () => {
         this.categories.update(current => current.filter(item => item.id !== id));
       },
       error: err => {
         console.error('Fail while deleting category', err);
         this.error.set(err.message);
+      },
+      complete: () => {
+        this.maintenanceService.loadMaintenances();
       },
     });
   }

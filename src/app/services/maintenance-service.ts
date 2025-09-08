@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Maintenance } from '../services/interfaces/maintenance.interface';
+import { Maintenance, repetition_unit } from '../services/interfaces/maintenance.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,6 @@ export class MaintenanceService {
 
   constructor() {
     this.loadMaintenances();
-    this.loadMaintenances();
   }
 
   loadMaintenances() {
@@ -26,9 +25,6 @@ export class MaintenanceService {
       error: err => {
         console.error('Failed to load maintenances', err);
         this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Maintances loaded', this.maintenance());
       },
     });
   }
@@ -42,14 +38,11 @@ export class MaintenanceService {
         console.error('Failed to load single maintenance', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Single maintenance loaded', this.selectedMaintenance());
-      },
     });
   }
 
   loadMaintenancesByCategory(category_id: string) {
-    this.http.get<Maintenance[]>(`${this.PATH}/category/${category_id}}`).subscribe({
+    this.http.get<Maintenance[]>(`${this.PATH}/category/${category_id}`).subscribe({
       next: data => {
         this.maintenance.set(data);
       },
@@ -57,16 +50,13 @@ export class MaintenanceService {
         console.error('Failed to load maintenances', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Maintenances loaded', this.selectedMaintenance());
-      },
     });
   }
 
   addMaintenance(
     title: string,
     start_date: string,
-    repetition_unit: string,
+    repetition_unit: repetition_unit,
     repetition_value: number,
     is_completed: boolean,
     category_id: string,
@@ -84,7 +74,6 @@ export class MaintenanceService {
       })
       .subscribe({
         next: data => {
-          console.log('Maintenance added:', data);
           this.maintenance.update(current => [...current, data]);
         },
         error: err => {
@@ -116,7 +105,6 @@ export class MaintenanceService {
       })
       .subscribe({
         next: data => {
-          console.log('Maintenance updated:', data);
           const maintenanceArray = this.maintenance();
           const updatedArray = maintenanceArray.map(item =>
             item.id === id ? { ...item, ...data } : item,
@@ -132,8 +120,7 @@ export class MaintenanceService {
 
   deleteMaintenance(id: string) {
     this.http.delete<{ message: string; data: Maintenance }>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        console.log(data);
+      next: () => {
         this.maintenance.update(current => current.filter(item => item.id !== id));
       },
       error: err => {
@@ -142,8 +129,7 @@ export class MaintenanceService {
       },
     });
     this.http.delete<{ message: string; data: Maintenance }>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        console.log(data);
+      next: () => {
         this.maintenance.update(current => current.filter(item => item.id !== id));
       },
       error: err => {
