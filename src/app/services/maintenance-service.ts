@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { Maintenance } from '../services/interfaces/maintenance.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,11 @@ export class MaintenanceService {
   private PATH = 'http://localhost:8000/api/maintenance';
 
   constructor() {
-    this.loadMaintenance();
+    this.loadMaintenances();
+    this.loadMaintenances();
   }
 
-  loadMaintenance() {
+  loadMaintenances() {
     this.http.get<Maintenance[]>(this.PATH).subscribe({
       next: data => {
         this.maintenance.set(data);
@@ -31,7 +33,7 @@ export class MaintenanceService {
     });
   }
 
-  loadSingleMaintenance(id: string) {
+  loadMaintenance(id: string) {
     this.http.get<Maintenance>(`${this.PATH}/${id}`).subscribe({
       next: data => {
         this.selectedMaintenance.set(data);
@@ -46,20 +48,39 @@ export class MaintenanceService {
     });
   }
 
+  loadMaintenancesByCategory(category_id: string) {
+    this.http.get<Maintenance[]>(`${this.PATH}/category/${category_id}}`).subscribe({
+      next: data => {
+        this.maintenance.set(data);
+      },
+      error: err => {
+        console.error('Failed to load maintenances', err);
+        this.error.set(err.message);
+      },
+      complete: () => {
+        console.log('Maintenances loaded', this.selectedMaintenance());
+      },
+    });
+  }
+
   addMaintenance(
     title: string,
-    categoryId: string,
-    startDate: string,
-    repeatInterval: string,
-    reminderDaysBefore: number,
+    start_date: string,
+    repetition_unit: string,
+    repetition_value: number,
+    is_completed: boolean,
+    category_id: string,
+    notes?: string,
   ) {
     this.http
       .post<Maintenance>(this.PATH, {
         title,
-        categoryId,
-        startDate,
-        repeatInterval,
-        reminderDaysBefore,
+        start_date,
+        repetition_unit,
+        repetition_value,
+        is_completed,
+        category_id,
+        notes,
       })
       .subscribe({
         next: data => {
@@ -76,20 +97,22 @@ export class MaintenanceService {
   updateMaintenance(
     id: string,
     title: string,
-    categoryId: string,
-    startDate: string,
-    repeatInterval: string,
-    reminderDaysBefore: number,
-    completed: boolean,
+    start_date: string,
+    repetition_unit: string,
+    repetition_value: number,
+    is_completed: boolean,
+    category_id: string,
+    notes?: string,
   ) {
     this.http
       .put<Maintenance>(`${this.PATH}/${id}`, {
         title,
-        categoryId,
-        startDate,
-        repeatInterval,
-        reminderDaysBefore,
-        completed,
+        category_id,
+        start_date,
+        repetition_unit,
+        repetition_value,
+        is_completed,
+        notes,
       })
       .subscribe({
         next: data => {
@@ -108,28 +131,25 @@ export class MaintenanceService {
   }
 
   deleteMaintenance(id: string) {
-    this.http
-      .delete<{ message: string; maintenance: Maintenance }>(`${this.PATH}/${id}`)
-      .subscribe({
-        next: data => {
-          console.log(data);
-          this.maintenance.update(current => current.filter(item => item.id !== id));
-        },
-        error: err => {
-          console.error('Failed while deleting maintenance', err);
-          this.error.set(err.message);
-        },
-      });
+    this.http.delete<{ message: string; data: Maintenance }>(`${this.PATH}/${id}`).subscribe({
+      next: data => {
+        console.log(data);
+        this.maintenance.update(current => current.filter(item => item.id !== id));
+      },
+      error: err => {
+        console.error('Failed while deleting maintenance', err);
+        this.error.set(err.message);
+      },
+    });
+    this.http.delete<{ message: string; data: Maintenance }>(`${this.PATH}/${id}`).subscribe({
+      next: data => {
+        console.log(data);
+        this.maintenance.update(current => current.filter(item => item.id !== id));
+      },
+      error: err => {
+        console.error('Failed while deleting maintenance', err);
+        this.error.set(err.message);
+      },
+    });
   }
-}
-
-interface Maintenance {
-  id: string;
-  title: string;
-  category_id: string;
-  start_date: string;
-  repeat_interval: string;
-  reminder_days_before: number;
-  completed: boolean;
-  user_id: string;
 }

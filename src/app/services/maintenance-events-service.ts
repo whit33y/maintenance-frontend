@@ -1,0 +1,105 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { MaintenanceEvent } from './interfaces/maintenance-events.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class MaintenanceEventsService {
+  http = inject(HttpClient);
+  maintenanceEvents = signal<MaintenanceEvent[]>([]);
+  selectedMaintenanceEvent = signal<MaintenanceEvent | null>(null);
+  error = signal<string>('');
+
+  private PATH = 'http://localhost:8000/api/maintenance-events';
+
+  constructor() {
+    this.loadMaintenanceEvents();
+  }
+
+  loadMaintenanceEvents() {
+    this.http.get<MaintenanceEvent[]>(this.PATH).subscribe({
+      next: response => {
+        this.maintenanceEvents.set(response);
+      },
+      error: err => {
+        console.error('Failed to load maintenance events', err);
+        this.error.set(err.message);
+      },
+      complete: () => {
+        console.log('Maintance events loaded', this.maintenanceEvents());
+      },
+    });
+  }
+
+  loadMaintenanceEvent(id: string) {
+    this.http.get<MaintenanceEvent>(`${this.PATH}/${id}`).subscribe({
+      next: response => {
+        this.selectedMaintenanceEvent.set(response);
+      },
+      error: err => {
+        console.error('Failed to load maintenance event', err);
+        this.error.set(err.message);
+      },
+      complete: () => {
+        console.log('Maintance events loaded', this.selectedMaintenanceEvent());
+      },
+    });
+  }
+
+  addMaintenanceEvent(maintenance_id: string, completition_date?: string, notes?: string) {
+    this.http
+      .post<MaintenanceEvent>(this.PATH, {
+        maintenance_id,
+        completition_date,
+        notes,
+      })
+      .subscribe({
+        next: response => {
+          console.log('Maintenance event added:', response);
+          this.maintenanceEvents.update(current => [...current, response]);
+        },
+        error: err => {
+          console.error('Failed to add maintenance-event', err);
+          this.error.set(err.message);
+        },
+      });
+  }
+
+  updateMaintenanceEvent(
+    id: string,
+    maintenance_id: string,
+    completition_date?: string,
+    notes?: string,
+  ) {
+    this.http
+      .post<MaintenanceEvent>(`${this.PATH}/${id}`, {
+        maintenance_id,
+        completition_date,
+        notes,
+      })
+      .subscribe({
+        next: response => {
+          console.log('Updated maintenance event:', response);
+          this.maintenanceEvents.update(current => [...current, response]);
+        },
+        error: err => {
+          console.error('Failed to update maintenance-event', err);
+          this.error.set(err.message);
+        },
+      });
+  }
+
+  deleteMaintenanceEvent(id: string) {
+    this.http.delete<{ message: string; data: MaintenanceEvent }>(`${this.PATH}/${id}`).subscribe({
+      next: data => {
+        console.log(data);
+        this.maintenanceEvents.update(current => current.filter(item => item.id !== id));
+      },
+      error: err => {
+        console.error('Failed while deleting maintenance event', err);
+        this.error.set(err.message);
+      },
+    });
+  }
+}

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { Category } from './interfaces/categories.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class CategoriesService {
 
   loadCategories() {
     this.http.get<Category[]>(this.PATH).subscribe({
-      next: data => {
-        this.categories.set(data);
+      next: response => {
+        this.categories.set(response);
       },
       error: err => {
         console.error('Failed to load categories', err);
@@ -33,8 +34,8 @@ export class CategoriesService {
 
   loadCategory(id: string) {
     this.http.get<Category>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        this.selectedCategory.set(data);
+      next: response => {
+        this.selectedCategory.set(response);
       },
       error: err => {
         console.error('Failed to load category', err);
@@ -46,17 +47,15 @@ export class CategoriesService {
     });
   }
 
-  addCategory(name: string, is_private: boolean, user_id: string) {
+  addCategory(name: string) {
     this.http
       .post<Category>(`${this.PATH}`, {
         name,
-        is_private,
-        user_id,
       })
       .subscribe({
-        next: data => {
-          console.log('Category added:', data);
-          this.categories.update(current => [...current, data]);
+        next: response => {
+          console.log('Category added:', response);
+          this.categories.update(current => [...current, response]);
         },
         error: err => {
           console.error('Failed to add category', err);
@@ -65,20 +64,17 @@ export class CategoriesService {
       });
   }
 
-  updateCategory(id: string, name: string, is_private: boolean, user_id: string) {
-    console.log(id, name, is_private, user_id);
+  updateCategory(id: string, name: string) {
     this.http
       .put<Category>(`${this.PATH}/${id}`, {
         name,
-        is_private,
-        user_id,
       })
       .subscribe({
-        next: data => {
-          console.log('Category updated:', data);
+        next: response => {
+          console.log('Category updated:', response);
           const categoryArray = this.categories();
           const updatedArray = categoryArray.map(item =>
-            item.id === id ? { ...item, ...data } : item,
+            item.id === id ? { ...item, ...response } : item,
           );
           this.categories.set(updatedArray);
         },
@@ -90,22 +86,15 @@ export class CategoriesService {
   }
 
   deleteCategory(id: string) {
-    this.http.delete<{ message: string; category: Category }>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        console.log(data);
+    this.http.delete<{ message: string; data: Category }>(`${this.PATH}/${id}`).subscribe({
+      next: response => {
+        console.log('Category deleted', response.data);
         this.categories.update(current => current.filter(item => item.id !== id));
       },
       error: err => {
-        console.error('Failed while deleting category', err);
+        console.error('Fail while deleting category', err);
         this.error.set(err.message);
       },
     });
   }
-}
-
-interface Category {
-  id: string;
-  name: string;
-  is_private: boolean;
-  user_id: string;
 }
