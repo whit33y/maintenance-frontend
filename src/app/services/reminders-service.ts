@@ -13,21 +13,14 @@ export class RemindersService {
 
   private PATH = 'http://localhost:8000/api/reminders';
 
-  constructor() {
-    this.loadReminders();
-  }
-
-  loadReminders() {
-    this.http.get<Reminder[]>(this.PATH).subscribe({
+  loadReminders(maintenance_id: string) {
+    this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({
       next: response => {
         this.reminders.set(response);
       },
       error: err => {
         console.error('Failed to load reminders', err);
         this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Reminders loaded', this.reminders());
       },
     });
   }
@@ -41,24 +34,6 @@ export class RemindersService {
         console.error('Failed to load reminder', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Reminder loaded', this.reminders());
-      },
-    });
-  }
-
-  loadMaintenanceReminders(maintenance_id: string) {
-    this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({
-      next: response => {
-        this.reminders.set(response);
-      },
-      error: err => {
-        console.error('Failed to load reminders', err);
-        this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Reminders loaded', this.reminders());
-      },
     });
   }
 
@@ -71,7 +46,6 @@ export class RemindersService {
       })
       .subscribe({
         next: response => {
-          console.log('Reminder added:', response);
           this.reminders.update(current => [...current, response]);
         },
         error: err => {
@@ -90,7 +64,6 @@ export class RemindersService {
       })
       .subscribe({
         next: response => {
-          console.log('Updated reminder:', response);
           this.reminders.update(current => [...current, response]);
         },
         error: err => {
@@ -102,8 +75,7 @@ export class RemindersService {
 
   deleteReminder(id: string) {
     this.http.delete<{ message: string; data: Reminder }>(`${this.PATH}/${id}`).subscribe({
-      next: response => {
-        console.log('Reminder deleted', response.data);
+      next: () => {
         this.reminders.update(current => current.filter(item => item.id !== id));
       },
       error: err => {

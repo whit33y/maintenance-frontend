@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MaintenanceEvent } from './interfaces/maintenance-events.interface';
 
@@ -13,12 +13,14 @@ export class MaintenanceEventsService {
 
   private PATH = 'http://localhost:8000/api/maintenance-events';
 
-  constructor() {
-    this.loadMaintenanceEvents();
-  }
+  loadMaintenanceEvents(maintenance_id: string, is_done?: string | number | undefined) {
+    let params = new HttpParams();
 
-  loadMaintenanceEvents() {
-    this.http.get<MaintenanceEvent[]>(this.PATH).subscribe({
+    if (is_done !== undefined) {
+      params = params.set('is_done', is_done);
+    }
+
+    this.http.get<MaintenanceEvent[]>(`${this.PATH}/${maintenance_id}`, { params }).subscribe({
       next: response => {
         this.maintenanceEvents.set(response);
       },
@@ -26,23 +28,18 @@ export class MaintenanceEventsService {
         console.error('Failed to load maintenance events', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Maintance events loaded', this.maintenanceEvents());
-      },
     });
   }
 
-  loadMaintenanceEvent(id: string) {
-    this.http.get<MaintenanceEvent>(`${this.PATH}/${id}`).subscribe({
+  loadMaintenanceEvent(id: string, callback: (event: MaintenanceEvent) => void) {
+    this.http.get<MaintenanceEvent>(`${this.PATH}/single/${id}`).subscribe({
       next: response => {
         this.selectedMaintenanceEvent.set(response);
+        callback(response);
       },
       error: err => {
         console.error('Failed to load maintenance event', err);
         this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Maintance events loaded', this.selectedMaintenanceEvent());
       },
     });
   }
@@ -56,7 +53,6 @@ export class MaintenanceEventsService {
       })
       .subscribe({
         next: response => {
-          console.log('Maintenance event added:', response);
           this.maintenanceEvents.update(current => [...current, response]);
         },
         error: err => {
@@ -66,22 +62,17 @@ export class MaintenanceEventsService {
       });
   }
 
-  updateMaintenanceEvent(
-    id: string,
-    maintenance_id: string,
-    completition_date?: string,
-    notes?: string,
-  ) {
+  updateMaintenanceEvent(id: string, completition_date?: string | null, notes?: string) {
     this.http
-      .post<MaintenanceEvent>(`${this.PATH}/${id}`, {
-        maintenance_id,
-        completition_date,
-        notes,
+      .put<MaintenanceEvent>(`${this.PATH}/${id}`, {
+        completion_date: completition_date,
+        notes: notes,
       })
       .subscribe({
         next: response => {
-          console.log('Updated maintenance event:', response);
-          this.maintenanceEvents.update(current => [...current, response]);
+          this.maintenanceEvents.update(current =>
+            current.map(event => (event.id === response.id ? response : event)),
+          );
         },
         error: err => {
           console.error('Failed to update maintenance-event', err);
@@ -92,8 +83,7 @@ export class MaintenanceEventsService {
 
   deleteMaintenanceEvent(id: string) {
     this.http.delete<{ message: string; data: MaintenanceEvent }>(`${this.PATH}/${id}`).subscribe({
-      next: data => {
-        console.log(data);
+      next: () => {
         this.maintenanceEvents.update(current => current.filter(item => item.id !== id));
       },
       error: err => {

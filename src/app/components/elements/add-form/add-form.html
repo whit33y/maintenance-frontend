@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col space-y-4 w-60 sm:w-80">
+    @for (control of config; track control.name) {
+    <div class="flex flex-col">
+        <label [for]="control.name" class="font-medium text-gray-700">
+            {{ control.label }}
+        </label>
+
+        @switch (control.type) {
+        @case ('text') {
+        <input [id]="control.name" [formControlName]="control.name" type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-600" />
+        }
+        @case ('textarea') {
+        <textarea [id]="control.name" [formControlName]="control.name" rows="3"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-600"></textarea>
+        }
+        @case ('checkbox') {
+        <input [id]="control.name" [formControlName]="control.name" type="checkbox"
+            class="mt-1 rounded focus:border-gray-600" />
+        }
+        @case ('date') {
+        <input [id]="control.name" [formControlName]="control.name" type="date"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-600" />
+        }
+        @case ('number') {
+        <input [id]="control.name" [formControlName]="control.name" type="number"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-600" />
+        }
+        @case ('select') {
+        <select [id]="control.name" [formControlName]="control.name"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-600">
+            @for (option of control.options; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+            }
+        </select>
+        }
+        @default {
+        }
+        }
+
+        @if (form.get(control.name)?.invalid && form.get(control.name)?.touched) {
+        <div class="mt-1 text-sm text-red-600">
+            This field is required.
+        </div>
+        }
+    </div>
+    } @empty {
+    <p class="text-gray-500">No fields.</p>
+    }
+
+    <button type="submit" [disabled]="form.invalid"
+        class="inline-flex justify-center rounded-md border border-transparent bg-green-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 hover:cursor-pointer">
+        Save
+    </button>
+</form>

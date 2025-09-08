@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-auth-form',
@@ -49,7 +49,6 @@ export class AuthForm {
     if (this.isLoginForm) {
       this.authService.login(email!, password!).subscribe({
         next: () => {
-          console.log('User logged in');
           this.router.navigate(['/maintenance']);
         },
         error: err => {
@@ -60,7 +59,6 @@ export class AuthForm {
     } else {
       this.authService.register(username!, email!, password!).subscribe({
         next: () => {
-          console.log('Account created!');
           this.toggleFormMode();
         },
         error: err => {

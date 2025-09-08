@@ -12,7 +12,7 @@ export interface Maintenance {
   updated_at: string;
 }
 
-enum repetition_unit {
+export enum repetition_unit {
   'day',
   'week',
   'month',
