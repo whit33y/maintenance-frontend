@@ -1,0 +1,16 @@
+<div>
+    <ul class="flex justify-center flex-wrap -mb-px text-sm font-medium text-center text-gray-400">
+        @for (tab of tabs; track $index) {
+        <li class="me-2">
+            <button (click)="selectTab($index)"
+                class="inline-flex items-center justify-center px-4 py-2 border-b-2 rounded-t-lg group hover:cursor-pointer"
+                [ngClass]="{
+            'text-gray-600': activeIndex === $index,
+            'border-transparent hover:text-gray-400 hover:border-gray-300': activeIndex !== $index
+          }">
+                {{ tab }}
+            </button>
+        </li>
+        }
+    </ul>
+</div>

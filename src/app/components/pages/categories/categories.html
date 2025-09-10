@@ -1,3 +1,6 @@
 <div>
     <app-header title="Categories" description="Manage your categories" />
+    <div>
+        <app-tabs [tabs]="['All', 'Add']" [activeIndex]="selectedTab" (tabChange)="onTabChange($event)" />
+    </div>
 </div>
