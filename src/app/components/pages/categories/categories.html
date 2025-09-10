@@ -3,4 +3,7 @@
     <div>
         <app-tabs [tabs]="['All', 'Add']" [activeIndex]="selectedTab" (tabChange)="onTabChange($event)" />
     </div>
+    <div class="px-10">
+        <app-table [columns]="['name', 'Created at']" [data]="this.categoriesService.categories()" />
+    </div>
 </div>

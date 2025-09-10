@@ -1,0 +1,29 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                @for (col of columns; track $index) {
+                <th scope="col" class="px-6 py-3">
+                    {{ col }}
+                </th>
+                }
+                <th scope="col" class="px-6 py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (row of data; track $index) {
+            <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
+                <td class="px-6 py-4">
+                    {{ row.name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ row.created_at }}
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
