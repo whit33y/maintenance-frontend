@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Header } from '../../layouts/header/header';
+import { Header } from '../../layout/header/header';
 
 @Component({
   selector: 'app-settings',

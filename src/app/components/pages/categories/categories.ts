@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CategoriesService } from '../../../services/categories-service';
-import { Header } from '../../layouts/header/header';
+import { Header } from '../../layout/header/header';
 
 @Component({
   selector: 'app-categories',
