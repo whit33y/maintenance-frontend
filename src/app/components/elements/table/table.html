@@ -4,7 +4,7 @@
             <tr>
                 @for (col of columns; track $index) {
                 <th scope="col" class="px-6 py-3">
-                    {{ col }}
+                    {{ col.header }}
                 </th>
                 }
                 <th scope="col" class="px-6 py-3">Action</th>
@@ -13,12 +13,11 @@
         <tbody>
             @for (row of data; track $index) {
             <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
+                @for (col of columns; track $index) {
                 <td class="px-6 py-4">
-                    {{ row.name }}
+                    {{ getFieldValue(row, col.field) }}
                 </td>
-                <td class="px-6 py-4">
-                    {{ row.created_at }}
-                </td>
+                }
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
                 </td>
