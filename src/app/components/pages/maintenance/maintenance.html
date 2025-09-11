@@ -1,5 +1,14 @@
 <div>
     <app-header title="Maintenance" description="Manage your maintenances" />
+    <div>
+        <app-tabs [tabs]="['All', 'Add new', 'By category']" [activeIndex]="selectedTab"
+            (tabChange)="onTabChange($event)" />
+    </div>
+    <div>
+        <app-select description="Select category"
+            [options]="[{name: 'Category', value: 'Category'},{name: 'Category 2', value: 'Category 2'}]"
+            (optionChange)="onOptionChange($event)" />
+    </div>
     <!-- <div class="px-0 sm:px-10">
         <app-table [columns]="[{header: 'title', field: 'title'}, {header: 'created at', field: 'created_at'}]"
             [data]="this.maintenanceService.maintenance()" />
