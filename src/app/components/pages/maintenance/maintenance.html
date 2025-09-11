@@ -1,16 +1,21 @@
 <div>
     <app-header title="Maintenance" description="Manage your maintenances" />
     <div>
-        <app-tabs [tabs]="['All', 'Add new', 'By category']" [activeIndex]="selectedTab"
+        <app-tabs [tabs]="['All', 'Add new', 'Category']" [activeIndex]="selectedTab"
             (tabChange)="onTabChange($event)" />
     </div>
-    <div>
+    <div class="px-0 sm:px-10">
+        @if(selectedTab === 0){
+        <app-table [columns]="[{header: 'title', field: 'title'}, {header: 'created at', field: 'created_at'}]"
+            [data]="this.maintenanceService.maintenance()" />
+        }
+        @if(selectedTab === 1){
+        <p>{{selectedTab}}- new</p>
+        }
+        @if(selectedTab === 2){
         <app-select description="Select category"
             [options]="[{name: 'Category', value: 'Category'},{name: 'Category 2', value: 'Category 2'}]"
             (optionChange)="onOptionChange($event)" />
+        }
     </div>
-    <!-- <div class="px-0 sm:px-10">
-        <app-table [columns]="[{header: 'title', field: 'title'}, {header: 'created at', field: 'created_at'}]"
-            [data]="this.maintenanceService.maintenance()" />
-    </div> -->
 </div>
