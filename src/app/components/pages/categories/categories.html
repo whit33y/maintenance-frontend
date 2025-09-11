@@ -1,7 +1,7 @@
 <div>
     <app-header title="Categories" description="Manage your categories" />
     <div>
-        <app-tabs [tabs]="['All', 'Add']" [activeIndex]="selectedTab" (tabChange)="onTabChange($event)" />
+        <app-tabs [tabs]="['All', 'Add new']" [activeIndex]="selectedTab" (tabChange)="onTabChange($event)" />
     </div>
     <div class="px-0 sm:px-10">
         @if(selectedTab === 0){
