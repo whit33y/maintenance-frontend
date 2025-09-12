@@ -13,6 +13,10 @@ export class CategoriesService {
 
   private PATH = 'http://localhost:8000/api/categories';
 
+  getCategoriesSignal() {
+    return this.categories.asReadonly();
+  }
+
   constructor() {
     this.loadCategories();
   }
