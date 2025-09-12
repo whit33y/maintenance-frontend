@@ -49,7 +49,7 @@ export class MaintenanceService {
   }
 
   loadMaintenancesByCategory(category_id: string) {
-    this.http.get<Maintenance[]>(`${this.PATH}/category/${category_id}}`).subscribe({
+    this.http.get<Maintenance[]>(`${this.PATH}/category/${category_id}`).subscribe({
       next: data => {
         this.maintenance.set(data);
       },

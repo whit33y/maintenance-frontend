@@ -38,6 +38,11 @@ export class Maintenance {
 
   onOptionChange(value: string | number) {
     this.selectedOption = value;
+    if (this.selectedOption === 'All categories') {
+      this.maintenanceService.loadMaintenances();
+    } else {
+      this.maintenanceService.loadMaintenancesByCategory(String(this.selectedOption));
+    }
   }
 
   categorySelect = computed(() => {
