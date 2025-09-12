@@ -8,8 +8,10 @@
         <app-table [columns]="[{header: 'name', field: 'name'}, {header: 'created at', field: 'created_at'}]"
             [data]="this.categoriesService.categories()" />
         }
-        @if(selectedTab === 1){
-        <p>New</p>
-        }
+        <div class="flex justify-center">
+            @if(selectedTab === 1){
+            <app-add-form [config]="categoriesFormConfig" (formSubmit)="submitForm($event)" />
+            }
+        </div>
     </div>
 </div>

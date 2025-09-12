@@ -1,8 +1,7 @@
 <div>
     <app-header title="Maintenance" description="Manage your maintenances">
         @if(selectedTab === 0){
-        <app-select description="Select category"
-            [options]="[{name: 'Category', value: 'Category'},{name: 'Category 2', value: 'Category 2'}]"
+        <app-select description="Select category" [options]="categorySelect()"
             (optionChange)="onOptionChange($event)" />
         }
     </app-header>

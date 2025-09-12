@@ -40,6 +40,17 @@ export class Maintenance {
     this.selectedOption = value;
   }
 
+  categorySelect = computed(() => {
+    const categories = this.categoriesService.categories();
+    if (!categories) {
+      return [];
+    }
+    return categories.map(cat => ({
+      name: cat.name,
+      value: cat.id,
+    }));
+  });
+
   categoryOptions = computed(() => {
     const categories = this.categoriesService.categories();
     if (!categories) {
@@ -51,6 +62,7 @@ export class Maintenance {
     }));
   });
 
+  //form
   maintenanceFormConfig: FormConfig[] = [];
 
   repetitionUnitOptions = [
@@ -107,4 +119,5 @@ export class Maintenance {
   submitForm(event: unknown) {
     console.log(event);
   }
+  //form
 }
