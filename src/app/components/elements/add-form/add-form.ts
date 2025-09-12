@@ -8,12 +8,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './add-form.html',
   styleUrl: './add-form.css',
 })
-export class AddForm implements OnInit {
+export class AddForm<T extends object> implements OnInit {
   private formBuilder = inject(FormBuilder);
   @Input() config!: FormConfig[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() data: any;
-  @Output() formSubmit = new EventEmitter<unknown>();
+  @Output() formSubmit = new EventEmitter<T>();
 
   form!: FormGroup;
 
@@ -32,7 +32,7 @@ export class AddForm implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.formSubmit.emit(this.form.value);
+      this.formSubmit.emit(this.form.value as T);
     }
   }
 }

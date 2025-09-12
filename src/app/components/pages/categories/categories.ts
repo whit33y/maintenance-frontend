@@ -6,6 +6,7 @@ import { Table } from '../../elements/table/table';
 import { FormConfig } from '../../elements/add-form/config/form.types';
 import { Validators } from '@angular/forms';
 import { AddForm } from '../../elements/add-form/add-form';
+import { CategoryForm } from '../../../services/models/form-models';
 
 @Component({
   selector: 'app-categories',
@@ -31,8 +32,9 @@ export class Categories {
     },
   ];
 
-  submitForm(event: unknown) {
-    console.log(event);
+  submitForm(event: CategoryForm) {
+    const categoriesEvent = event;
+    this.categoriesService.addCategory(categoriesEvent.name);
   }
   //form
 }

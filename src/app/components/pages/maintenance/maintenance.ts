@@ -10,6 +10,7 @@ import { Validators } from '@angular/forms';
 import { FormConfig } from '../../elements/add-form/config/form.types';
 import { CategoriesService } from '../../../services/categories-service';
 import { AddForm } from '../../elements/add-form/add-form';
+import { MaintenanceForm } from '../../../services/models/form-models';
 
 @Component({
   selector: 'app-maintenance',
@@ -121,8 +122,17 @@ export class Maintenance {
     ];
   }
 
-  submitForm(event: unknown) {
-    console.log(event);
+  submitForm(event: MaintenanceForm) {
+    const mainetnanceEvent = event;
+    this.maintenanceService.addMaintenance(
+      mainetnanceEvent.title,
+      mainetnanceEvent.start_date,
+      mainetnanceEvent.repetition_unit,
+      mainetnanceEvent.repetition_value,
+      false,
+      mainetnanceEvent.category_id,
+      mainetnanceEvent.notes,
+    );
   }
   //form
 }

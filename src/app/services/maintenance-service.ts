@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Maintenance } from '../services/interfaces/maintenance.interface';
+import { Maintenance, repetition_unit } from '../services/interfaces/maintenance.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -66,7 +66,7 @@ export class MaintenanceService {
   addMaintenance(
     title: string,
     start_date: string,
-    repetition_unit: string,
+    repetition_unit: repetition_unit,
     repetition_value: number,
     is_completed: boolean,
     category_id: string,
