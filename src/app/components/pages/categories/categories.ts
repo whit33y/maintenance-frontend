@@ -35,6 +35,7 @@ export class Categories {
   submitForm(event: CategoryForm) {
     const categoriesEvent = event;
     this.categoriesService.addCategory(categoriesEvent.name);
+    this.selectedTab = 0;
   }
   //form
 }

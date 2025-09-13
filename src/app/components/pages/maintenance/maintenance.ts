@@ -133,6 +133,7 @@ export class Maintenance {
       mainetnanceEvent.category_id,
       mainetnanceEvent.notes,
     );
+    this.selectedTab = 0;
   }
   //form
 }
