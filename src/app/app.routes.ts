@@ -16,9 +16,21 @@ export const routes: Routes = [
   },
   {
     path: 'maintenance',
-    loadComponent: () =>
-      import('./components/pages/maintenance/maintenance').then(m => m.Maintenance),
     canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/pages/maintenance/maintenance').then(m => m.Maintenance),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./components/pages/maintenance-events/maintenance-events').then(
+            m => m.MaintenanceEvents,
+          ),
+      },
+    ],
   },
   {
     path: 'settings',

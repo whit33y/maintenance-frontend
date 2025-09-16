@@ -12,14 +12,15 @@
         </thead>
         <tbody>
             @for (row of data; track $index) {
-            <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
+            <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200 hover:cursor-pointer"
+                (click)="sendId.emit(row.id)">
                 @for (col of columns; track $index) {
                 <td class="px-6 py-4">
                     {{ getFieldValue(row, col.field) }}
                 </td>
                 }
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                    <p class="font-medium text-blue-600 hover:underline">{{button_text}}</p>
                 </td>
             </tr>
             }

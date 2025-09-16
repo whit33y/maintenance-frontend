@@ -11,6 +11,7 @@ import { FormConfig } from '../../elements/add-form/config/form.types';
 import { CategoriesService } from '../../../services/categories-service';
 import { AddForm } from '../../elements/add-form/add-form';
 import { MaintenanceForm } from '../../../services/models/form-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-maintenance',
@@ -24,6 +25,8 @@ export class Maintenance {
   maintenanceEventsService = inject(MaintenanceEventsService);
   remindersService = inject(RemindersService);
   categoriesService = inject(CategoriesService);
+  router = inject(Router);
+
   selectedTab = 0;
   selectedOption: string | number | undefined;
 
@@ -136,4 +139,8 @@ export class Maintenance {
     this.selectedTab = 0;
   }
   //form
+
+  openMaintenanceEvent(id: string) {
+    this.router.navigate(['/maintenance', id]);
+  }
 }
