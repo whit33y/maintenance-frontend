@@ -13,12 +13,8 @@ export class RemindersService {
 
   private PATH = 'http://localhost:8000/api/reminders';
 
-  constructor() {
-    this.loadReminders();
-  }
-
-  loadReminders() {
-    this.http.get<Reminder[]>(this.PATH).subscribe({
+  loadReminders(maintenance_id: string) {
+    this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({
       next: response => {
         this.reminders.set(response);
       },
@@ -43,21 +39,6 @@ export class RemindersService {
       },
       complete: () => {
         console.log('Reminder loaded', this.reminders());
-      },
-    });
-  }
-
-  loadMaintenanceReminders(maintenance_id: string) {
-    this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({
-      next: response => {
-        this.reminders.set(response);
-      },
-      error: err => {
-        console.error('Failed to load reminders', err);
-        this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Reminders loaded', this.reminders());
       },
     });
   }
