@@ -13,12 +13,8 @@ export class MaintenanceEventsService {
 
   private PATH = 'http://localhost:8000/api/maintenance-events';
 
-  constructor() {
-    this.loadMaintenanceEvents();
-  }
-
-  loadMaintenanceEvents() {
-    this.http.get<MaintenanceEvent[]>(this.PATH).subscribe({
+  loadMaintenanceEvents(maintenance_id: string) {
+    this.http.get<MaintenanceEvent[]>(`${this.PATH}/${maintenance_id}`).subscribe({
       next: response => {
         this.maintenanceEvents.set(response);
       },
