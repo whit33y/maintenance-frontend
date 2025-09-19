@@ -26,9 +26,6 @@ export class MaintenanceService {
         console.error('Failed to load maintenances', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Maintances loaded', this.maintenance());
-      },
     });
   }
 
@@ -41,9 +38,6 @@ export class MaintenanceService {
         console.error('Failed to load single maintenance', err);
         this.error.set(err.message);
       },
-      complete: () => {
-        console.log('Single maintenance loaded', this.selectedMaintenance());
-      },
     });
   }
 
@@ -55,9 +49,6 @@ export class MaintenanceService {
       error: err => {
         console.error('Failed to load maintenances', err);
         this.error.set(err.message);
-      },
-      complete: () => {
-        console.log('Maintenances loaded', this.selectedMaintenance());
       },
     });
   }

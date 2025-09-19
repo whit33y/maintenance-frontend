@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../../services/interfaces/categories.interface';
 import { Maintenance } from '../../../services/interfaces/maintenance.interface';
 import { MaintenanceEvent } from '../../../services/interfaces/maintenance-events.interface';
+import { CommonModule } from '@angular/common';
 
 function hasProperty<T extends object, K extends keyof T>(
   obj: T,
@@ -12,7 +13,7 @@ function hasProperty<T extends object, K extends keyof T>(
 
 @Component({
   selector: 'app-table',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })

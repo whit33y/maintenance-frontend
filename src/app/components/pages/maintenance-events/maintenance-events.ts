@@ -29,15 +29,17 @@ export class MaintenanceEvents implements OnInit {
   onOptionChange(value: string | number | undefined) {
     this.selectedOption = value;
     if (this.selectedOption === 'All events') {
-      console.log('All');
       this.maintenanceEventsService.loadMaintenanceEvents(this.id);
     } else {
-      console.log(this.selectedOption);
       this.maintenanceEventsService.loadMaintenanceEvents(this.id, value);
     }
   }
 
   back() {
     this.router.navigate(['/maintenance']);
+  }
+
+  changeStatus(id: string) {
+    console.log(id);
   }
 }
