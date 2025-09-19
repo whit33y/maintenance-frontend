@@ -15,7 +15,6 @@ export class MaintenanceService {
 
   constructor() {
     this.loadMaintenances();
-    this.loadMaintenances();
   }
 
   loadMaintenances() {

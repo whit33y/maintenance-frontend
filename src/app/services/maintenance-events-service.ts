@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MaintenanceEvent } from './interfaces/maintenance-events.interface';
 
@@ -13,8 +13,14 @@ export class MaintenanceEventsService {
 
   private PATH = 'http://localhost:8000/api/maintenance-events';
 
-  loadMaintenanceEvents(maintenance_id: string) {
-    this.http.get<MaintenanceEvent[]>(`${this.PATH}/${maintenance_id}`).subscribe({
+  loadMaintenanceEvents(maintenance_id: string, is_done?: string | number | undefined) {
+    let params = new HttpParams();
+
+    if (is_done !== undefined) {
+      params = params.set('is_done', is_done);
+    }
+
+    this.http.get<MaintenanceEvent[]>(`${this.PATH}/${maintenance_id}`, { params }).subscribe({
       next: response => {
         this.maintenanceEvents.set(response);
       },
@@ -23,7 +29,7 @@ export class MaintenanceEventsService {
         this.error.set(err.message);
       },
       complete: () => {
-        console.log('Maintance events loaded', this.maintenanceEvents());
+        console.log('Maintenance events loaded', this.maintenanceEvents());
       },
     });
   }
