@@ -42,4 +42,12 @@ export class MaintenanceEvents implements OnInit {
   changeStatus(id: string) {
     console.log(id);
   }
+
+  deleteEvent(id: string) {
+    console.log(id);
+  }
+
+  editEvent(id: string) {
+    console.log(id);
+  }
 }
