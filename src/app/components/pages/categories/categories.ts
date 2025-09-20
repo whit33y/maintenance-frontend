@@ -7,6 +7,7 @@ import { FormConfig } from '../../elements/add-form/config/form.types';
 import { Validators } from '@angular/forms';
 import { AddForm } from '../../elements/add-form/add-form';
 import { CategoryForm } from '../../../services/models/form-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -16,6 +17,7 @@ import { CategoryForm } from '../../../services/models/form-models';
 })
 export class Categories {
   categoriesService = inject(CategoriesService);
+  router = inject(Router);
   selectedTab = 0;
 
   onTabChange(index: number) {
@@ -38,4 +40,8 @@ export class Categories {
     this.selectedTab = 0;
   }
   //form
+
+  openDetails(id: string) {
+    this.router.navigate(['/categories', id]);
+  }
 }

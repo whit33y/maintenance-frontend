@@ -6,7 +6,7 @@
     <div class="px-0 sm:px-10">
         @if(selectedTab === 0){
         <app-table [columns]="[{header: 'name', field: 'name'}, {header: 'created at', field: 'created_at'}]"
-            [data]="this.categoriesService.categories()" />
+            [data]="this.categoriesService.categories()" (sendId)="openDetails($event)" />
         }
         <div class="flex justify-center">
             @if(selectedTab === 1){

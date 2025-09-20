@@ -5,14 +5,27 @@ export const routes: Routes = [
   {
     path: 'authentication',
     loadComponent: () =>
-      import('./components/pages/authentication/authentication').then(m => m.Authentication),
+      import('./components/pages/authentication/authentication').then(c => c.Authentication),
     canActivate: [authGuard],
     data: { guestOnly: true },
   },
   {
     path: 'categories',
-    loadComponent: () => import('./components/pages/categories/categories').then(m => m.Categories),
     canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/pages/categories/categories').then(c => c.Categories),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./components/pages/categories-details/categories-details').then(
+            c => c.CategoriesDetails,
+          ),
+      },
+    ],
   },
   {
     path: 'maintenance',
@@ -21,20 +34,20 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./components/pages/maintenance/maintenance').then(m => m.Maintenance),
+          import('./components/pages/maintenance/maintenance').then(c => c.Maintenance),
       },
       {
         path: ':id',
         loadComponent: () =>
           import('./components/pages/maintenance-events/maintenance-events').then(
-            m => m.MaintenanceEvents,
+            c => c.MaintenanceEvents,
           ),
       },
     ],
   },
   {
     path: 'settings',
-    loadComponent: () => import('./components/pages/settings/settings').then(m => m.Settings),
+    loadComponent: () => import('./components/pages/settings/settings').then(c => c.Settings),
     canActivate: [authGuard],
   },
   {
