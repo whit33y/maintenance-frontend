@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MaintenanceEvent } from './interfaces/maintenance-events.interface';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +11,7 @@ export class MaintenanceEventsService {
   selectedMaintenanceEvent = signal<MaintenanceEvent | null>(null);
   error = signal<string>('');
 
-  private PATH = 'http://localhost:8000/api/maintenance-events';
+  private PATH = `${environment.PATH}/api/maintenance-events`;
 
   loadMaintenanceEvents(maintenance_id: string, is_done?: string | number | undefined) {
     let params = new HttpParams();

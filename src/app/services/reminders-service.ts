@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Reminder } from './interfaces/reminders.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class RemindersService {
   selectedReminder = signal<Reminder | null>(null);
   error = signal<string>('');
 
-  private PATH = 'http://localhost:8000/api/reminders';
+  private PATH = `${environment.PATH}/api/reminders`;
 
   loadReminders(maintenance_id: string) {
     this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { User } from './interfaces/auth.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { User } from './interfaces/auth.interface';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private PATH = 'http://localhost:8000/api/auth';
+  private PATH = `${environment.PATH}/api/auth`;
 
   login(email: string, password: string) {
     return this.http
