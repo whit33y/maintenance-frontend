@@ -2,7 +2,7 @@ export interface Maintenance {
   id: string;
   title: string;
   start_date: string;
-  repetition_unit: repetition_unit;
+  repetition_unit: string;
   repetition_value: number;
   is_completed: boolean;
   notes: string;

@@ -31,6 +31,17 @@ export class AuthService {
     return this.http.post(`${this.PATH}/register`, { name, email, password });
   }
 
+  deleteAccount(password: string) {
+    const options = {
+      body: { password: password },
+    };
+    return this.http.delete<{ message: string }>(`${this.PATH}`, options);
+  }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    return this.http.patch(`${this.PATH}/change-password`, { oldPassword, newPassword });
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
