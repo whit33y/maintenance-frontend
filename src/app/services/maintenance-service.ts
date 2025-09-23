@@ -138,4 +138,10 @@ export class MaintenanceService {
       },
     });
   }
+
+  clear() {
+    this.maintenance.set([]);
+    this.selectedMaintenance.set(null);
+    this.error.set('');
+  }
 }

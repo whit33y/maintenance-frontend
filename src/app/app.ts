@@ -11,7 +11,7 @@ import { PopupService } from './services/popup-service';
   styleUrl: './app.css',
 })
 export class App {
-  protected title = 'frontend';
+  protected title = 'Maintenance App';
   router = inject(Router);
   popupService = inject(PopupService);
   get isAuthPage(): boolean {

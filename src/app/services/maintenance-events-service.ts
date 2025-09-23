@@ -92,4 +92,10 @@ export class MaintenanceEventsService {
       },
     });
   }
+
+  clear() {
+    this.maintenanceEvents.set([]);
+    this.selectedMaintenanceEvent.set(null);
+    this.error.set('');
+  }
 }

@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
+
   private PATH = `${environment.PATHB}/api/auth`;
 
   login(email: string, password: string) {

@@ -12,7 +12,7 @@ export class CategoriesService {
   maintenanceService = inject(MaintenanceService);
   error = signal<string>('');
   categories = signal<Category[]>([]);
-  selectedCategory = signal<Category | undefined>(undefined);
+  selectedCategory = signal<Category | null>(null);
 
   private PATH = `${environment.PATHB}/api/categories`;
 
@@ -97,5 +97,11 @@ export class CategoriesService {
         this.maintenanceService.loadMaintenances();
       },
     });
+  }
+
+  clear() {
+    this.categories.set([]);
+    this.selectedCategory.set(null);
+    this.error.set('');
   }
 }
