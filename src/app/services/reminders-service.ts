@@ -12,7 +12,7 @@ export class RemindersService {
   selectedReminder = signal<Reminder | null>(null);
   error = signal<string>('');
 
-  private PATH = `${environment.PATH}/api/reminders`;
+  private PATH = `${environment.PATHB}/api/reminders`;
 
   loadReminders(maintenance_id: string) {
     this.http.get<Reminder[]>(`${this.PATH}/maintenance/${maintenance_id}`).subscribe({

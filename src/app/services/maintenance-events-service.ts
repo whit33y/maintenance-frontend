@@ -11,7 +11,7 @@ export class MaintenanceEventsService {
   selectedMaintenanceEvent = signal<MaintenanceEvent | null>(null);
   error = signal<string>('');
 
-  private PATH = `${environment.PATH}/api/maintenance-events`;
+  private PATH = `${environment.PATHB}/api/maintenance-events`;
 
   loadMaintenanceEvents(maintenance_id: string, is_done?: string | number | undefined) {
     let params = new HttpParams();

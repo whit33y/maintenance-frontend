@@ -7,8 +7,8 @@ const dotenv = require('dotenv').config({ path: './src/.env' });;
 console.log(process.env);
 
 const envFile = `export const environment = {
-    production: '${process.env.production}',
-    PATH: '${process.env.PATH}',
+    prod: '${process.env.prod}',
+    PATHB: '${process.env.PATHB}',
 };
 `;
 const targetPath = path.join(__dirname, './src/environments/environment.ts');

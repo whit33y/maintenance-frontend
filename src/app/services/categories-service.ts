@@ -14,7 +14,7 @@ export class CategoriesService {
   categories = signal<Category[]>([]);
   selectedCategory = signal<Category | undefined>(undefined);
 
-  private PATH = `${environment.PATH}/api/categories`;
+  private PATH = `${environment.PATHB}/api/categories`;
 
   getCategoriesSignal() {
     return this.categories.asReadonly();

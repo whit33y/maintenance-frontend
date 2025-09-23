@@ -11,7 +11,7 @@ export class MaintenanceService {
   selectedMaintenance = signal<Maintenance | null>(null);
   error = signal<string>('');
 
-  private PATH = `${environment.PATH}/api/maintenance`;
+  private PATH = `${environment.PATHB}/api/maintenance`;
 
   constructor() {
     this.loadMaintenances();
