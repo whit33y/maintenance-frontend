@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Category } from './interfaces/categories.interface';
-import { MaintenanceService } from './maintenance-service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class CategoriesService {
   categories = signal<Category[]>([]);
   selectedCategory = signal<Category | undefined>(undefined);
 
-  private PATH = 'http://localhost:8000/api/categories';
+  private PATH = `${environment.PATH}/api/categories`;
 
   getCategoriesSignal() {
     return this.categories.asReadonly();

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Maintenance, repetition_unit } from '../services/interfaces/maintenance.interface';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +11,7 @@ export class MaintenanceService {
   selectedMaintenance = signal<Maintenance | null>(null);
   error = signal<string>('');
 
-  private PATH = 'http://localhost:8000/api/maintenance';
+  private PATH = `${environment.PATH}/api/maintenance`;
 
   constructor() {
     this.loadMaintenances();
