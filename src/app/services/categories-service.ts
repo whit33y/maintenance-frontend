@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Category } from './interfaces/categories.interface';
 import { environment } from '../../environments/environment';
+import { MaintenanceService } from './maintenance-service';
 
 @Injectable({
   providedIn: 'root',
