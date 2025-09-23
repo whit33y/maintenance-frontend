@@ -5,10 +5,13 @@ import { Header } from '../../layout/header/header';
 import { MaintenanceService } from '../../../services/maintenance-service';
 import { Select } from '../../elements/select/select';
 import { Table } from '../../elements/table/table';
+import { AddForm } from '../../elements/add-form/add-form';
+import { FormConfig } from '../../elements/add-form/config/form.types';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-maintenance-events',
-  imports: [Header, Select, Table],
+  imports: [Header, Select, Table, AddForm],
   templateUrl: './maintenance-events.html',
   styleUrl: './maintenance-events.css',
 })
@@ -57,7 +60,42 @@ export class MaintenanceEvents implements OnInit {
     this.back();
   }
 
-  editEvent(id: string) {
-    console.log(id);
+  maintenanceFormConfig: FormConfig[] = [
+    {
+      name: 'title',
+      label: 'Title',
+      type: 'text',
+      validators: [Validators.required, Validators.maxLength(255)],
+    },
+    {
+      name: 'notes',
+      label: 'Notes',
+      type: 'textarea',
+    },
+  ];
+  showEditForm = false;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  maintenanceFormData: any;
+  toggleEditEvent() {
+    this.showEditForm = !this.showEditForm;
+    this.maintenanceFormData = {
+      title: this.maintenanceService.selectedMaintenance()?.title,
+      notes: this.maintenanceService.selectedMaintenance()?.notes,
+    };
+  }
+
+  updateMaintenance(event: { title: string; notes?: string }) {
+    this.maintenanceService.updateMaintenance(
+      this.maintenanceService.selectedMaintenance()!.id,
+      event.title,
+      this.maintenanceService.selectedMaintenance()!.start_date,
+      this.maintenanceService.selectedMaintenance()!.repetition_unit,
+      this.maintenanceService.selectedMaintenance()!.repetition_value,
+      this.maintenanceService.selectedMaintenance()!.is_completed,
+      this.maintenanceService.selectedMaintenance()!.category_id,
+      event.notes,
+    );
+    this.back();
   }
 }

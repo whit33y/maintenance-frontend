@@ -25,9 +25,10 @@
             }
         </div>
         <div>
-            <!-- <button
+            @if(!showEditForm){
+            <button
                 class="flex justify-center items-center my-1 w-24 py-1 text-sm font-medium focus:outline-none rounded-lg border hover:bg-blue-500 hover:cursor-pointer focus:z-10 focus:ring-4focus:ring-blue-700 bg-blue-500 text-white border-blue-600 hover:text-white"
-                (click)="editEvent(id)">Edit
+                (click)="toggleEditEvent()">Edit
                 <svg xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" class="fill-white p-0.5"
                     width="18" height="18">
                     <path
@@ -35,8 +36,19 @@
                     <path
                         d="M23.145.855a2.622,2.622,0,0,0-3.71,0L15.929,4.362l3.709,3.709,3.507-3.506A2.622,2.622,0,0,0,23.145.855Z" />
                 </svg>
+            </button>
+            }@else {
+            <button
+                class="flex justify-center items-center my-1 w-24 py-1 text-sm font-medium focus:outline-none rounded-lg border hover:bg-gray-500 hover:cursor-pointer focus:z-10 focus:ring-4focus:ring-blue-700 bg-gray-500 text-white border-gray-600 hover:text-white"
+                (click)="toggleEditEvent()">Close
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="18"
+                    class="fill-white p-0.5" height="18">
+                    <path
+                        d="M13.292,12L21.774,1.633c.35-.427,.286-1.057-.142-1.407-.428-.348-1.057-.287-1.407,.142L12,10.421,3.774,.367c-.351-.429-.98-.49-1.407-.142-.428,.351-.491,.98-.142,1.407L10.708,12,2.226,22.367c-.35,.427-.286,1.057,.142,1.407,.425,.348,1.056,.288,1.407-.142L12,13.579l8.226,10.053c.351,.43,.982,.489,1.407,.142,.428-.351,.491-.98,.142-1.407L13.292,12Z" />
+                </svg>
 
-            </button> -->
+            </button>
+            }
             <button
                 class="flex justify-center items-center w-24  py-1 text-sm font-medium focus:outline-none rounded-lg border hover:bg-red-400 hover:cursor-pointer focus:z-10 focus:ring-4 focus:ring-gray-700 bg-red-500 text-white border-red-600 hover:text-white"
                 (click)="deleteEvent(id)">Delete
@@ -52,9 +64,16 @@
         </div>
     </div>
     <div class="px-0 sm:px-10">
+        @if(!showEditForm){
         <app-table
             [columns]="[{header: 'Due date', field: 'due_date'}, {header: 'Completion date', field: 'completion_date'}]"
             [data]="this.maintenanceEventsService.maintenanceEvents()" button_text="Done"
             (sendId)="changeStatus($event)" />
+        }@else{
+        <div class="flex justify-center">
+            <app-add-form [config]="maintenanceFormConfig" [data]="maintenanceFormData"
+                (formSubmit)="updateMaintenance($event)"></app-add-form>
+        </div>
+        }
     </div>
 </div>
