@@ -16,7 +16,8 @@
                 (click)="sendId.emit(row.id)">
                 @for (col of columns; track $index) {
                 <td class="px-6 py-4">
-                    @if(col.field === 'due_date' || col.field === 'completion_date' || col.field === 'created_at'){
+                    @if(col.field === 'due_date' || col.field === 'completion_date' || col.field === 'created_at' ||
+                    col.field === 'start_date'){
                     {{ getFieldValue(row, col.field)| date:'dd.MM.yyyy' }}
                     }@else{
                     {{ getFieldValue(row, col.field) }}

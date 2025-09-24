@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PopupType } from '../../../services/popup-service';
+import { PopupType } from '../../../services/interfaces/popup.interface';
 
 @Component({
   selector: 'app-popup',

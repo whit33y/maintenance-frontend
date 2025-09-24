@@ -1,7 +1,9 @@
 <div>
     <app-header title="Maintenance" description="Manage your maintenances">
         @if(selectedTab === 0){
-        <app-select description="All categories" [options]="categorySelect()" (optionChange)="onOptionChange($event)" />
+        <app-select description="Select view" [options]="view" (optionChange)="onViewChange($event)" class="mx-1" />
+        <app-select description="All categories" [showDesc]="true" [options]="categorySelect()" class="mx-1"
+            (optionChange)="onOptionChange($event)" />
         }
     </app-header>
     <div>
@@ -9,8 +11,16 @@
     </div>
     <div class="px-0 sm:px-10 ">
         @if(selectedTab === 0){
-        <app-table [columns]="[{header: 'title', field: 'title'}, {header: 'created at', field: 'created_at'}]"
+        @if(selectView === 'list'){
+        <app-table [columns]="[{header: 'title', field: 'title'}, {header: 'Start date', field: 'start_date'}]"
             [data]="this.maintenanceService.maintenance()" button_text="Open" (sendId)="openMaintenanceEvent($event)" />
+        }@else{
+        <div class="flex justify-center">
+            <div class="w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 h-96 sm:h-[500px] md:h-[600px]">
+                <full-calendar [options]="calendarOptions"></full-calendar>
+            </div>
+        </div>
+        }
         }
         <div class="flex justify-center">
             @if(selectedTab === 1){

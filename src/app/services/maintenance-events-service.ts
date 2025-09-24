@@ -13,6 +13,18 @@ export class MaintenanceEventsService {
 
   private PATH = `${environment.PATHB}/api/maintenance-events`;
 
+  loadAllMaintenanceEvents() {
+    this.http.get<MaintenanceEvent[]>(`${this.PATH}`).subscribe({
+      next: response => {
+        this.maintenanceEvents.set(response);
+      },
+      error: err => {
+        console.error('Failed to load maintenance events', err);
+        this.error.set(err.message);
+      },
+    });
+  }
+
   loadMaintenanceEvents(maintenance_id: string, is_done?: string | number | undefined) {
     let params = new HttpParams();
 

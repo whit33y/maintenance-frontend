@@ -11,8 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class AddForm<T extends object> implements OnInit {
   private formBuilder = inject(FormBuilder);
   @Input() config!: FormConfig[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @Input() data: any;
+  @Input() data?: maintenanceEventFormData;
   @Output() formSubmit = new EventEmitter<T>();
 
   form!: FormGroup;
@@ -35,4 +34,10 @@ export class AddForm<T extends object> implements OnInit {
       this.formSubmit.emit(this.form.value as T);
     }
   }
+}
+
+export interface maintenanceEventFormData {
+  title?: string;
+  notes?: string;
+  [key: string]: string | undefined;
 }

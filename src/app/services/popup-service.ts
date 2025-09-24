@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { PopupType } from './interfaces/popup.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +24,3 @@ export class PopupService {
     this.visible.set(false);
   }
 }
-
-export type PopupType = 'Success' | 'Warning' | 'Error';

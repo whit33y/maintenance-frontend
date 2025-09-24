@@ -3,8 +3,7 @@ import { CategoriesService } from '../../../services/categories-service';
 import { Header } from '../../layout/header/header';
 import { Tabs } from '../../elements/tabs/tabs';
 import { Table } from '../../elements/table/table';
-import { FormConfig } from '../../elements/add-form/config/form.types';
-import { Validators } from '@angular/forms';
+import { categoriesForm } from './categories-form.config';
 import { AddForm } from '../../elements/add-form/add-form';
 import { CategoryForm } from '../../../services/models/form-models';
 import { Router } from '@angular/router';
@@ -16,30 +15,22 @@ import { Router } from '@angular/router';
   styleUrl: './categories.css',
 })
 export class Categories {
-  categoriesService = inject(CategoriesService);
   router = inject(Router);
+  categoriesService = inject(CategoriesService);
+
   selectedTab = 0;
+  categoriesFormConfig = categoriesForm;
 
   onTabChange(index: number) {
     this.selectedTab = index;
   }
 
   //form
-  categoriesFormConfig: FormConfig[] = [
-    {
-      name: 'name',
-      label: 'Name',
-      type: 'text',
-      validators: [Validators.required, Validators.maxLength(255)],
-    },
-  ];
-
   submitForm(event: CategoryForm) {
     const categoriesEvent = event;
     this.categoriesService.addCategory(categoriesEvent.name);
     this.selectedTab = 0;
   }
-  //form
 
   openDetails(id: string) {
     this.router.navigate(['/categories', id]);
