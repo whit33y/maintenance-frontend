@@ -15,6 +15,7 @@ export class CategoriesDetails implements OnInit {
   router = inject(Router);
 
   id!: string;
+
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')!;
     this.categoriesService.loadCategory(this.id);

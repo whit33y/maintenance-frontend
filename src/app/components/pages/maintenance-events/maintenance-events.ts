@@ -5,9 +5,8 @@ import { Header } from '../../layout/header/header';
 import { MaintenanceService } from '../../../services/maintenance-service';
 import { Select } from '../../elements/select/select';
 import { Table } from '../../elements/table/table';
-import { AddForm } from '../../elements/add-form/add-form';
-import { FormConfig } from '../../elements/add-form/config/form.types';
-import { Validators } from '@angular/forms';
+import { AddForm, maintenanceEventFormData } from '../../elements/add-form/add-form';
+import { maintenanceForm } from './maintenance-events-form.config';
 
 @Component({
   selector: 'app-maintenance-events',
@@ -16,19 +15,23 @@ import { Validators } from '@angular/forms';
   styleUrl: './maintenance-events.css',
 })
 export class MaintenanceEvents implements OnInit {
-  maintenanceEventsService = inject(MaintenanceEventsService);
-  maintenanceService = inject(MaintenanceService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  maintenanceEventsService = inject(MaintenanceEventsService);
+  maintenanceService = inject(MaintenanceService);
 
+  showEditForm = false;
+  maintenanceFormData: maintenanceEventFormData = { title: '' };
+  maintenanceFormConfig = maintenanceForm;
   id!: string;
+  selectedOption: string | number | undefined;
+
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id')!;
     this.maintenanceEventsService.loadMaintenanceEvents(this.id);
     this.maintenanceService.loadMaintenance(this.id);
   }
 
-  selectedOption: string | number | undefined;
   onOptionChange(value: string | number | undefined) {
     this.selectedOption = value;
     if (this.selectedOption === 'All events') {
@@ -36,10 +39,6 @@ export class MaintenanceEvents implements OnInit {
     } else {
       this.maintenanceEventsService.loadMaintenanceEvents(this.id, value);
     }
-  }
-
-  back() {
-    this.router.navigate(['/maintenance']);
   }
 
   changeStatus(id: string) {
@@ -60,23 +59,6 @@ export class MaintenanceEvents implements OnInit {
     this.back();
   }
 
-  maintenanceFormConfig: FormConfig[] = [
-    {
-      name: 'title',
-      label: 'Title',
-      type: 'text',
-      validators: [Validators.required, Validators.maxLength(255)],
-    },
-    {
-      name: 'notes',
-      label: 'Notes',
-      type: 'textarea',
-    },
-  ];
-  showEditForm = false;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  maintenanceFormData: any;
   toggleEditEvent() {
     this.showEditForm = !this.showEditForm;
     this.maintenanceFormData = {
@@ -97,5 +79,9 @@ export class MaintenanceEvents implements OnInit {
       event.notes,
     );
     this.back();
+  }
+
+  back() {
+    this.router.navigate(['/maintenance']);
   }
 }

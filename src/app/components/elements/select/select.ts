@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class Select {
   @Input() description = 'Select option';
+  @Input() showDesc? = false;
   @Input() options: { name: string; value: string | number }[] = [];
   @Output() optionChange = new EventEmitter<string | number>();
 

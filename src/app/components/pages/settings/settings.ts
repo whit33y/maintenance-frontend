@@ -14,6 +14,16 @@ export class Settings {
 
   deletePopupActive = false;
   deleteError = '';
+  errorChangePassword = '';
+  deleteForm = new FormGroup({
+    password: new FormControl('', Validators.required),
+  });
+  changePasswordForm = new FormGroup({
+    oldPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    retypePassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+  });
+
   deleteUser(password: string) {
     this.authService.deleteAccount(password).subscribe({
       error: error => {
@@ -32,17 +42,6 @@ export class Settings {
     this.deleteForm.setValue({ password: '' });
   }
 
-  deleteForm = new FormGroup({
-    password: new FormControl('', Validators.required),
-  });
-
-  changePasswordForm = new FormGroup({
-    oldPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    retypePassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
-
-  errorChangePassword = '';
   submitChangePassword(oldPassword: string, newPassword: string, retypePassword: string) {
     if (newPassword === retypePassword) {
       this.authService.changePassword(oldPassword, newPassword).subscribe({
