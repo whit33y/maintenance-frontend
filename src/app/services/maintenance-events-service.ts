@@ -2,11 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MaintenanceEvent } from './interfaces/maintenance-events.interface';
 import { environment } from '../../environments/environment';
+import { PopupService } from './popup-service';
 @Injectable({
   providedIn: 'root',
 })
 export class MaintenanceEventsService {
   http = inject(HttpClient);
+  popupService = inject(PopupService);
   maintenanceEvents = signal<MaintenanceEvent[]>([]);
   selectedMaintenanceEvent = signal<MaintenanceEvent | null>(null);
   error = signal<string>('');
@@ -89,6 +91,9 @@ export class MaintenanceEventsService {
         error: err => {
           console.error('Failed to update maintenance-event', err);
           this.error.set(err.message);
+        },
+        complete: () => {
+          this.popupService.showPopup('Success', 'Task done!');
         },
       });
   }
