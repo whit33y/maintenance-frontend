@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { AuthService } from '../../../services/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PopupService } from '../../../services/popup-service';
 
 @Component({
   selector: 'app-settings',
@@ -11,6 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Settings {
   authService = inject(AuthService);
+  popupService = inject(PopupService);
 
   deletePopupActive = false;
   deleteError = '';
@@ -31,6 +33,7 @@ export class Settings {
       },
       complete: () => {
         this.deletePopupActive = false;
+        this.popupService.showPopup('Warning', 'You deleted your account.');
         this.authService.logout();
       },
     });
@@ -46,14 +49,14 @@ export class Settings {
     if (newPassword === retypePassword) {
       this.authService.changePassword(oldPassword, newPassword).subscribe({
         error: error => {
-          this.errorChangePassword = error.error.message;
+          this.popupService.showPopup('Error', error.error.message);
         },
         complete: () => {
           this.authService.logout();
         },
       });
     } else {
-      this.errorChangePassword = 'New password and retyped password are not the same.';
+      this.popupService.showPopup('Error', 'New password and retyped password are not the same.');
     }
   }
 }

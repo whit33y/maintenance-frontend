@@ -3,12 +3,14 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Category } from './interfaces/categories.interface';
 import { environment } from '../../environments/environment';
 import { MaintenanceService } from './maintenance-service';
+import { PopupService } from './popup-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoriesService {
   http = inject(HttpClient);
+  popupService = inject(PopupService);
   maintenanceService = inject(MaintenanceService);
   error = signal<string>('');
   categories = signal<Category[]>([]);
@@ -61,6 +63,9 @@ export class CategoriesService {
           console.error('Failed to add category', err);
           this.error.set(err.message);
         },
+        complete: () => {
+          this.popupService.showPopup('Success', 'Added new category!');
+        },
       });
   }
 
@@ -81,6 +86,9 @@ export class CategoriesService {
           console.error('Failed to update category', err);
           this.error.set(err.message);
         },
+        complete: () => {
+          this.popupService.showPopup('Success', 'Updated category!');
+        },
       });
   }
 
@@ -94,6 +102,7 @@ export class CategoriesService {
         this.error.set(err.message);
       },
       complete: () => {
+        this.popupService.showPopup('Warning', 'Deleted category!');
         this.maintenanceService.loadMaintenances();
       },
     });

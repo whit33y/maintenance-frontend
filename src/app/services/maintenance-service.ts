@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Maintenance, repetition_unit } from '../services/interfaces/maintenance.interface';
 import { environment } from '../../environments/environment';
+import { PopupService } from './popup-service';
 @Injectable({
   providedIn: 'root',
 })
 export class MaintenanceService {
   http = inject(HttpClient);
+  popupService = inject(PopupService);
   maintenance = signal<Maintenance[]>([]);
   selectedMaintenance = signal<Maintenance | null>(null);
   error = signal<string>('');
@@ -80,6 +82,9 @@ export class MaintenanceService {
           console.error('Failed to add maintenance', err);
           this.error.set(err.message);
         },
+        complete: () => {
+          this.popupService.showPopup('Success', 'Added new maintenance!');
+        },
       });
   }
 
@@ -115,6 +120,9 @@ export class MaintenanceService {
           console.error('Failed to update maintenance', err);
           this.error.set(err.message);
         },
+        complete: () => {
+          this.popupService.showPopup('Success', 'Updated maintenance!');
+        },
       });
   }
 
@@ -135,6 +143,7 @@ export class MaintenanceService {
       error: err => {
         console.error('Failed while deleting maintenance', err);
         this.error.set(err.message);
+        this.popupService.showPopup('Warning', 'Deleted maintenance!');
       },
     });
   }

@@ -1,21 +1,22 @@
 @if(visible){
-<div class="absolute bottom-14 right-2">
-    <div class="relative rounded-lg shadow-sm text-gray-600 bg-gray-50 border-1 border-gray-400 w-60 min-h-20">
-        <div class="m-0 p-1 px-2 flex justify-between">
-            <h3 class="text-2xl text-black font-bold">
-                {{type.toUpperCase()}}
+<div class="absolute bottom-14 right-4 animate-fade-in">
+    <div class="relative rounded-xl shadow-lg border px-3 py-2 w-72 min-h-20 backdrop-blur-sm transition-all"
+        [ngClass]="popupClasses">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold tracking-wide">
+                {{ type.toUpperCase() }}
             </h3>
-            <button (click)="closePopup.emit(true)" class="hover:cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            <button (click)="closePopup.emit(true)" class="hover:scale-110 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+                    class="icon icon-tabler icon-tabler-x">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M18 6l-12 12" />
                     <path d="M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <p class="m-0 px-2">{{description}}</p>
+        <p class="mt-1 text-sm">{{ description }}</p>
     </div>
 </div>
 }
