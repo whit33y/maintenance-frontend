@@ -3,6 +3,13 @@ import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
+    path: 'landing',
+    loadComponent: () =>
+      import('./components/pages/landing-page/landing-page').then(c => c.LandingPage),
+    canActivate: [authGuard],
+    data: { guestOnly: true },
+  },
+  {
     path: 'authentication',
     loadComponent: () =>
       import('./components/pages/authentication/authentication').then(c => c.Authentication),
@@ -52,11 +59,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'maintenance',
+    redirectTo: 'landing',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'maintenance',
+    redirectTo: 'landing',
   },
 ];
