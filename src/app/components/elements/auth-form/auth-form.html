@@ -60,30 +60,24 @@
       <div>
         <div class="flex items-center justify-between">
           <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-          <!-- <div class="text-sm">
-            @if(isLoginForm){
-            <a class="font-semibold text-blue-700 hover:text-blue-500 hover:cursor-pointer">Forgot password?</a>
-            }
-          </div> -->
         </div>
         <div class="mt-2">
           <input id="password" formControlName="password" type="password" name="password" required
             autocomplete="current-password"
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6" />
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6" />
         </div>
       </div>
 
       <div>
         <button type="submit" (click)="onSubmit()"
-          class="flex w-full justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">@if(!isLoginForm){
+          class="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2">@if(!isLoginForm){
           Register }@else{ Log in }</button>
       </div>
     </form>
 
     <p class="mt-10 text-center text-sm/6 text-gray-500">
       @if(isLoginForm){You dont have an account?}@else {You already have an account?}
-      <button type="button" class="font-semibold text-blue-700 hover:text-blue-500 hover:cursor-pointer"
-        (click)="toggleFormMode()">
+      <button type="button" class="font-semibold text-blue-500 hover:cursor-pointer" (click)="toggleFormMode()">
         @if(isLoginForm){ Register }@else{ Log in }
       </button>
     </p>
