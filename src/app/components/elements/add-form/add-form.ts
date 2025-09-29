@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class AddForm<T extends object> implements OnInit {
   private formBuilder = inject(FormBuilder);
   @Input() config!: FormConfig[];
-  @Input() data?: maintenanceEventFormData;
+  @Input() data?: maintenanceEventFormData | categoryEventFormData;
   @Output() formSubmit = new EventEmitter<T>();
 
   form!: FormGroup;
@@ -39,5 +39,10 @@ export class AddForm<T extends object> implements OnInit {
 export interface maintenanceEventFormData {
   title?: string;
   notes?: string;
+  [key: string]: string | undefined;
+}
+
+export interface categoryEventFormData {
+  name: string;
   [key: string]: string | undefined;
 }

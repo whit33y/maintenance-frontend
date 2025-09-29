@@ -70,26 +70,22 @@ export class CategoriesService {
   }
 
   updateCategory(id: string, name: string) {
-    this.http
-      .put<Category>(`${this.PATH}/${id}`, {
-        name,
-      })
-      .subscribe({
-        next: response => {
-          const categoryArray = this.categories();
-          const updatedArray = categoryArray.map(item =>
-            item.id === id ? { ...item, ...response } : item,
-          );
-          this.categories.set(updatedArray);
-        },
-        error: err => {
-          console.error('Failed to update category', err);
-          this.error.set(err.message);
-        },
-        complete: () => {
-          this.popupService.showPopup('Success', 'Updated category!');
-        },
-      });
+    this.http.put<Category>(`${this.PATH}/${id}`, name).subscribe({
+      next: response => {
+        const categoryArray = this.categories();
+        const updatedArray = categoryArray.map(item =>
+          item.id === id ? { ...item, ...response } : item,
+        );
+        this.categories.set(updatedArray);
+      },
+      error: err => {
+        console.error('Failed to update category', err);
+        this.error.set(err.message);
+      },
+      complete: () => {
+        this.popupService.showPopup('Success', 'Updated category!');
+      },
+    });
   }
 
   deleteCategory(id: string) {
