@@ -3,10 +3,11 @@ import { Header } from '../../layout/header/header';
 import { AuthService } from '../../../services/auth-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PopupService } from '../../../services/popup-service';
+import { SettingsConfirmDialog } from '../../elements/settings-confirm-dialog/settings-confirm-dialog';
 
 @Component({
   selector: 'app-settings',
-  imports: [Header, ReactiveFormsModule],
+  imports: [Header, ReactiveFormsModule, SettingsConfirmDialog],
   templateUrl: './settings.html',
   styleUrl: './settings.css',
 })
@@ -14,12 +15,9 @@ export class Settings {
   authService = inject(AuthService);
   popupService = inject(PopupService);
 
-  deletePopupActive = false;
+  showDeleteDialog = false;
   deleteError = '';
   errorChangePassword = '';
-  deleteForm = new FormGroup({
-    password: new FormControl('', Validators.required),
-  });
   changePasswordForm = new FormGroup({
     oldPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
     newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -32,7 +30,7 @@ export class Settings {
         this.deleteError = error.error.message;
       },
       complete: () => {
-        this.deletePopupActive = false;
+        this.showDeleteDialog = false;
         this.popupService.showPopup('Warning', 'You deleted your account.');
         this.authService.logout();
       },
@@ -40,9 +38,7 @@ export class Settings {
   }
 
   changeActive() {
-    this.deleteError = '';
-    this.deletePopupActive = !this.deletePopupActive;
-    this.deleteForm.setValue({ password: '' });
+    this.showDeleteDialog = !this.showDeleteDialog;
   }
 
   submitChangePassword(oldPassword: string, newPassword: string, retypePassword: string) {
