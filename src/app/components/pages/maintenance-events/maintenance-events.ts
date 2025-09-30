@@ -70,17 +70,21 @@ export class MaintenanceEvents implements OnInit {
   }
 
   updateMaintenance(event: { title: string; notes?: string }) {
-    this.maintenanceService.updateMaintenance(
-      this.maintenanceService.selectedMaintenance()!.id,
-      event.title,
-      this.maintenanceService.selectedMaintenance()!.start_date,
-      this.maintenanceService.selectedMaintenance()!.repetition_unit,
-      this.maintenanceService.selectedMaintenance()!.repetition_value,
-      this.maintenanceService.selectedMaintenance()!.is_completed,
-      this.maintenanceService.selectedMaintenance()!.category_id,
-      event.notes,
-    );
-    this.back();
+    const selected = this.maintenanceService.selectedMaintenance();
+
+    if (selected) {
+      this.maintenanceService.updateMaintenance(
+        selected.id,
+        event.title,
+        selected.start_date,
+        selected.repetition_unit,
+        selected.repetition_value,
+        selected.is_completed,
+        selected.category_id,
+        event.notes,
+      );
+      this.back();
+    }
   }
 
   back() {

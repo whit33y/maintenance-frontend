@@ -41,13 +41,19 @@ export class CategoriesDetails implements OnInit {
 
   toggleEditCategory() {
     this.showEditForm = !this.showEditForm;
-    this.categoryFormData = {
-      name: this.categoriesService.selectedCategory()!.name,
-    };
+    const selected = this.categoriesService.selectedCategory();
+    if (selected) {
+      this.categoryFormData = {
+        name: selected.name,
+      };
+    }
   }
 
   updateCategory(name: string) {
-    this.categoriesService.updateCategory(this.categoriesService.selectedCategory()!.id, name);
+    const selected = this.categoriesService.selectedCategory();
+    if (selected) {
+      this.categoriesService.updateCategory(selected.id, name);
+    }
     this.categoriesService.loadCategory(this.id);
     this.toggleEditCategory();
   }
