@@ -7,10 +7,11 @@ import { Select } from '../../elements/select/select';
 import { Table } from '../../elements/table/table';
 import { AddForm, maintenanceEventFormData } from '../../elements/add-form/add-form';
 import { maintenanceForm } from './maintenance-events-form.config';
+import { ConfirmDialog } from '../../elements/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-maintenance-events',
-  imports: [Header, Select, Table, AddForm],
+  imports: [Header, Select, Table, AddForm, ConfirmDialog],
   templateUrl: './maintenance-events.html',
   styleUrl: './maintenance-events.css',
 })
@@ -21,6 +22,7 @@ export class MaintenanceEvents implements OnInit {
   maintenanceService = inject(MaintenanceService);
 
   showEditForm = false;
+  showDeleteDialog = false;
   maintenanceFormData: maintenanceEventFormData = { title: '' };
   maintenanceFormConfig = maintenanceForm;
   id!: string;
@@ -54,7 +56,7 @@ export class MaintenanceEvents implements OnInit {
     });
   }
 
-  deleteEvent(id: string) {
+  deleteMaintenance(id: string) {
     this.maintenanceService.deleteMaintenance(id);
     this.back();
   }
@@ -83,5 +85,9 @@ export class MaintenanceEvents implements OnInit {
 
   back() {
     this.router.navigate(['/maintenance']);
+  }
+
+  toggleDialog() {
+    this.showDeleteDialog = !this.showDeleteDialog;
   }
 }

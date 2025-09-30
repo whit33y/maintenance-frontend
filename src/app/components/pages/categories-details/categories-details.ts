@@ -4,10 +4,11 @@ import { CategoriesService } from '../../../services/categories-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddForm, categoryEventFormData } from '../../elements/add-form/add-form';
 import { categoryForm } from './category-details-form.config';
+import { ConfirmDialog } from '../../elements/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-categories-details',
-  imports: [Header, AddForm],
+  imports: [Header, AddForm, ConfirmDialog],
   templateUrl: './categories-details.html',
   styleUrl: './categories-details.css',
 })
@@ -18,6 +19,7 @@ export class CategoriesDetails implements OnInit {
 
   id!: string;
   showEditForm = false;
+  showDeleteDialog = false;
   categoryFormData: categoryEventFormData = { name: '' };
   categoryFormConfig = categoryForm;
 
@@ -30,9 +32,11 @@ export class CategoriesDetails implements OnInit {
     this.router.navigate(['/categories']);
   }
 
-  deleteCategory(id: string) {
-    this.categoriesService.deleteCategory(id);
-    this.back();
+  deleteCategory(id?: string) {
+    if (id) {
+      this.categoriesService.deleteCategory(id);
+      this.back();
+    }
   }
 
   toggleEditCategory() {
@@ -46,5 +50,9 @@ export class CategoriesDetails implements OnInit {
     this.categoriesService.updateCategory(this.categoriesService.selectedCategory()!.id, name);
     this.categoriesService.loadCategory(this.id);
     this.toggleEditCategory();
+  }
+
+  toggleDialog() {
+    this.showDeleteDialog = !this.showDeleteDialog;
   }
 }
