@@ -134,15 +134,6 @@ export class MaintenanceService {
       error: err => {
         console.error('Failed while deleting maintenance', err);
         this.error.set(err.message);
-      },
-    });
-    this.http.delete<{ message: string; data: Maintenance }>(`${this.PATH}/${id}`).subscribe({
-      next: () => {
-        this.maintenance.update(current => current.filter(item => item.id !== id));
-      },
-      error: err => {
-        console.error('Failed while deleting maintenance', err);
-        this.error.set(err.message);
         this.popupService.showPopup('Warning', 'Deleted maintenance!');
       },
     });
