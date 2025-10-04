@@ -15,7 +15,7 @@ export class App {
   router = inject(Router);
   popupService = inject(PopupService);
   get isAuthPage(): boolean {
-    return this.router.url.startsWith('/authentication') || this.router.url.startsWith('/landing');
+    return this.router.url.startsWith('/authentication') || this.router.url.startsWith('/start');
   }
 
   closePopup() {

@@ -3,11 +3,11 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 @for (col of columns; track $index) {
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-4 py-3">
                     {{ col.header }}
                 </th>
                 }
-                <th scope="col" class="px-6 py-3">Action</th>
+                <th scope="col" class="px-4 py-3">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -15,7 +15,7 @@
             <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200 hover:cursor-pointer"
                 (click)="sendId.emit(row.id)">
                 @for (col of columns; track $index) {
-                <td class="px-6 py-4">
+                <td class="px-4 py-4">
                     @if(col.field === 'due_date' || col.field === 'completion_date' || col.field === 'created_at' ||
                     col.field === 'start_date'){
                     {{ getFieldValue(row, col.field)| date:'dd.MM.yyyy' }}
@@ -24,7 +24,7 @@
                     }
                 </td>
                 }
-                <td class="px-6 py-4">
+                <td class="px-4 py-4">
                     <p class="font-medium text-blue-600 hover:underline">{{button_text}}</p>
                 </td>
             </tr>

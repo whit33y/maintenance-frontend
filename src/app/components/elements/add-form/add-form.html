@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col space-y-4 w-60 sm:w-80">
     @for (control of config; track control.name) {
     <div class="flex flex-col">
-        <label [for]="control.name" class="font-medium text-gray-700">
+        <label [for]="control.name" class="text-sm md:text-md font-medium text-gray-700">
             {{ control.label }}
         </label>
 

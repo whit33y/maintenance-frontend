@@ -3,9 +3,8 @@ import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
-    path: 'landing',
-    loadComponent: () =>
-      import('./components/pages/landing-page/landing-page').then(c => c.LandingPage),
+    path: 'start',
+    loadComponent: () => import('./components/pages/start-page/start-page').then(c => c.StartPage),
     canActivate: [authGuard],
     data: { guestOnly: true },
   },
@@ -59,11 +58,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'landing',
+    redirectTo: 'start',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'landing',
+    redirectTo: 'start',
   },
 ];
