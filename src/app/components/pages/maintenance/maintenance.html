@@ -16,7 +16,7 @@
             [data]="this.maintenanceService.maintenance()" button_text="Open" (sendId)="openMaintenanceEvent($event)" />
         }@else{
         <div class="flex justify-center">
-            <div class="w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 h-96 sm:h-[500px] md:h-[600px]">
+            <div class="w-full overflow-y-auto sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 h-96 sm:h-[400px] md:h-[600px]">
                 <full-calendar [options]="calendarOptions"></full-calendar>
             </div>
         </div>
