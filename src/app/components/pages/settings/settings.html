@@ -11,7 +11,8 @@
       )">
                 <label for="oldPassword" class="text-xs font-medium text-gray-700">Current password</label>
                 <input type="password" id="oldPassword" formControlName="oldPassword"
-                    class="mt-1 block w-60 rounded-md border-gray-300 shadow-sm focus:border-gray-600">
+                    class="mt-1 block w-60 rounded-md border-gray-300 shadow-sm focus:border-gray-600"
+                    autocomplete="current-password">
 
                 @if (changePasswordForm.get('oldPassword')?.touched && changePasswordForm.get('oldPassword')?.invalid) {
                 <div class="text-red-500 text-xs w-60">
@@ -25,7 +26,8 @@
                 }
                 <label for="newPassword" class="text-xs font-medium text-gray-700">New password</label>
                 <input type="password" id="newPassword" formControlName="newPassword"
-                    class="mt-1 block w-60 rounded-md border-gray-300 shadow-sm focus:border-gray-600">
+                    class="mt-1 block w-60 rounded-md border-gray-300 shadow-sm focus:border-gray-600"
+                    autocomplete="new-password">
 
                 @if (changePasswordForm.get('newPassword')?.touched && changePasswordForm.get('newPassword')?.invalid) {
                 <div class="text-red-500 text-xs w-60">
@@ -38,7 +40,7 @@
                 </div>
                 }
                 <label for="retypePassword" class="text-xs font-medium text-gray-700">Retype password</label>
-                <input type="password" id="retypePassword" formControlName="retypePassword"
+                <input type="password" id="retypePassword" formControlName="retypePassword" autocomplete="new-password"
                     class="mt-1 block w-60 rounded-md border-gray-300 shadow-sm focus:border-gray-600">
 
                 @if (changePasswordForm.get('retypePassword')?.touched &&
