@@ -22,10 +22,6 @@ export class CategoriesService {
     return this.categories.asReadonly();
   }
 
-  constructor() {
-    this.loadCategories();
-  }
-
   loadCategories() {
     this.http.get<Category[]>(this.PATH).subscribe({
       next: response => {

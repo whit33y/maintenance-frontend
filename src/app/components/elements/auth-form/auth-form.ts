@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
-import { MaintenanceService } from '../../../services/maintenance-service';
-import { CategoriesService } from '../../../services/categories-service';
 
 @Component({
   selector: 'app-auth-form',
@@ -14,8 +12,6 @@ import { CategoriesService } from '../../../services/categories-service';
 export class AuthForm {
   private authService = inject(AuthService);
   private router = inject(Router);
-  private maintenanceService = inject(MaintenanceService);
-  private categoriesService = inject(CategoriesService);
 
   isLoginForm = true;
   errorMessage = ' ';
@@ -58,10 +54,6 @@ export class AuthForm {
         error: err => {
           this.errorMessage = err.error.message;
           console.error('Failed to log in!', err);
-        },
-        complete: () => {
-          this.categoriesService.loadCategories();
-          this.maintenanceService.loadMaintenances();
         },
       });
     } else {

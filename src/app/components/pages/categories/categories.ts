@@ -25,6 +25,10 @@ export class Categories {
     this.selectedTab = index;
   }
 
+  constructor() {
+    this.categoriesService.loadCategories();
+  }
+
   //form
   submitForm(event: CategoryForm) {
     const categoriesEvent = event;

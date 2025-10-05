@@ -15,10 +15,6 @@ export class MaintenanceService {
 
   private PATH = `${environment.PATHB}/api/maintenance`;
 
-  constructor() {
-    this.loadMaintenances();
-  }
-
   loadMaintenances() {
     this.http.get<Maintenance[]>(this.PATH).subscribe({
       next: data => {
