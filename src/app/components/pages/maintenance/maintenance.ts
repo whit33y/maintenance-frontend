@@ -42,6 +42,7 @@ export class Maintenance {
 
   constructor() {
     this.maintenanceService.loadMaintenances();
+    this.categoriesService.loadCategories();
     this.maintenanceEventsService.loadAllMaintenanceEvents();
     effect(() => {
       this.updateFormConfig();
